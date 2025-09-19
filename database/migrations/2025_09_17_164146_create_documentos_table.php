@@ -11,8 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documentos', function (Blueprint $table) {
-            $table->id();
+        Schema::create('documento', function (Blueprint $table) {
+            $table->id("idDocumento");
+            $table->string("consecutivo", 10);
+            $table->string("nombre", 60);
+            $table->date("fechaCreacion");
+            $table->date("fechaVersion");
+            $table->integer("n_version");
+            $table->date("fechaRevision");
+            $table->integer("n_revision");
+            $table->integer("n_version_actualizada")->nullable();
+            $table->string("numeral", 20)->nullable();
+            $table->string("observaciones", 200)->nullable();
+            $table->string("rutaArchivo", 200);
+            $table->foreignId("idProceso")->constrained('proceso', 'idProceso')->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId("idTipoDocumento")->constrained('tipoDocumento', 'idTipoDocumento')->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -22,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documentos');
+        Schema::dropIfExists('documento');
     }
 };

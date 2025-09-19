@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipoDocumento', function (Blueprint $table) {
-            $table->id("idTipoDocumento");
-            $table->string("nombreDocumento",20);
-            $table->string("prefijo", 3);
+        Schema::create('rolDocumento', function (Blueprint $table) {            
+            $table->foreignId("idRol")->constrained('rol','idRol')->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId("idDocumento")->constrained('documento', 'idDocumento')->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipoDocumento');
+        Schema::dropIfExists('rolDocumento');
     }
 };

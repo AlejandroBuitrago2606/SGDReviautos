@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proceso extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProcesoFactory> */
     use HasFactory;
+    protected $fillable = [
+        'nombreProceso',
+        'prefijo'
+    ];
 }

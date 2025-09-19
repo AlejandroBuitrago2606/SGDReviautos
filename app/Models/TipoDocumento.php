@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoDocumento extends Model
 {
-    /** @use HasFactory<\Database\Factories\TipoDocumentoFactory> */
     use HasFactory;
+    protected $fillable = [
+        'nombreDocumento',
+        'prefijo'
+    ];
 }

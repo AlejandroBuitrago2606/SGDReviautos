@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RolDocumento extends Model
 {
-    /** @use HasFactory<\Database\Factories\RolDocumentoFactory> */
     use HasFactory;
+    protected $fillable = [
+        'idRol',
+        'idDocumento'
+    ];
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -7,6 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Documento extends Model
 {
-    /** @use HasFactory<\Database\Factories\DocumentoFactory> */
     use HasFactory;
+    protected $fillable = [
+        'consecutivo',
+        'nombre',
+        'fechaCreacion',
+        'fechaVersion',
+        'n_version',
+        'fechaRevision',
+        'n_revision',
+        'n_version_actualizada',
+        'numeral',
+        'observaciones',
+        'rutaArchivo',
+        'idProceso',
+        'idTipoDocumento'
+    ];
 }

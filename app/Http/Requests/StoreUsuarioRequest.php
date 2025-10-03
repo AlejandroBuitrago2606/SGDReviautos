@@ -22,7 +22,11 @@ class StoreUsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "nombreUsuario" => "required|string|max:80",
+            "telefono" => "required|string|max:10",
+            "correo" => "required|string|max:50",
+            "clave" => "required|string|max:150",
+            "idRol" => "required|integer"
         ];
     }
 }

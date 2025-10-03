@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
+use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
@@ -62,5 +63,43 @@ class UsuarioController extends Controller
     public function destroy(Usuario $usuario)
     {
         //
+    }
+
+    public function login(Request $request)
+    {
+        $correo = $request->input('correo');
+        $clave = $request->input('clave');
+
+        if (!isset($correo) || !isset($clave)) {
+            return response()->json(['message' => 'Correo y clave son requeridos'], 400);
+        }
+
+        $usuario = new Usuario();
+        $usuario->correo = $correo;
+        //Encriptar la clave antes de asignarla
+        //$usuario->clave = password_hash($clave, PASSWORD_DEFAULT);.
+        $usuario->clave = $clave;
+        $usuarioVerificado = $this->verificarUsuario($usuario);
+
+        if ($usuarioVerificado) {
+            return view('/login',['usuario' => 'Usuario verificado']);
+        } else {
+            return view('/login',['usuario' => 'Credenciales invalidas']);
+            
+        }
+    }
+
+
+    public function verificarUsuario(Usuario $usuario): Usuario|null
+    {
+        $existe = Usuario::where('correo', $usuario->correo)
+            ->where('clave', $usuario->clave)
+            ->first();
+
+        if ($existe) {
+            return $usuario;
+        } else {
+            return null;
+        }
     }
 }

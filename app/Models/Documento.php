@@ -24,4 +24,7 @@ class Documento extends Model
         'idProceso',
         'idTipoDocumento'
     ];
+
+    //Agregar campo 'responsable'
+    
 }

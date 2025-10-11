@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documento;
+use App\Models\Proceso;
+use App\Models\TipoDocumento;
 use App\Http\Requests\StoreDocumentoRequest;
 use App\Http\Requests\UpdateDocumentoRequest;
 
@@ -62,5 +64,14 @@ class DocumentoController extends Controller
     public function destroy(Documento $documento)
     {
         //
+    }
+
+
+      public function viewAgregarDoc ()
+    {
+        $procesos = Proceso::all();
+        $tp = TipoDocumento::All();
+        $datos = [$procesos, $tp];
+        return view('/agregarDocumento', ["datos"=> $datos]);
     }
 }

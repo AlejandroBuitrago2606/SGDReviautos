@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proceso;
+use App\Models\TipoDocumento;
 use App\Http\Requests\StoreProcesoRequest;
 use App\Http\Requests\UpdateProcesoRequest;
+use PhpParser\Node\Expr\Array_;
 
 class ProcesoController extends Controller
 {
@@ -13,7 +15,8 @@ class ProcesoController extends Controller
      */
     public function index()
     {
-        //
+        $procesos = Proceso::All();
+        return response()->json(["procesos" => $procesos]);
     }
 
     /**
@@ -63,4 +66,7 @@ class ProcesoController extends Controller
     {
         //
     }
+
+
+  
 }

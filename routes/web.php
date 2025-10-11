@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\DocumentoController;
 
 
 Route::get('/', function () {
@@ -13,8 +14,6 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/agregarDocumento', function () {
-    return view('agregarDocumento');
-});
+Route::get('/agregarDocumento', [DocumentoController::class, 'viewAgregarDoc']);
 
 Route::post('/login', [UsuarioController::class, 'login']);

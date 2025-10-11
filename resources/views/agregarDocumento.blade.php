@@ -22,15 +22,33 @@
             <div class="row">
                 <div class="col-3">
                     <h3>Proceso</h3>
+
+                    @if (!isset($datos[0]) and !isset($datos[1]) )
+                    <script>
+                        setTimeout(() => {
+                            const msg = "No se han cargado los datos";
+                            alert(msg);
+
+                        }, 0.05);
+                    </script>
+
+                    @endif
+
                     <select name="proceso" class="form-control" id="proceso">
+                        @foreach ($datos[0] as $proceso)
+                            <option value="{{ $proceso->idProceso }}">{{ $proceso->nombreProceso.' - ' . $proceso->prefijo}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-3">
                     <h3>Tipo de Documento</h3>
                     <select name="tipoDocumento" class="form-control" id="tipoDocumento">
+                        @foreach ($datos[1] as $tp)
+                            <option value="{{ $tp->idTipoDocumento }}">{{ $tp->nombreDocumento.' - ' . $tp->prefijo }}</option>
+                        @endforeach
                     </select>
                 </div>
-    
+
                 <div class="col-3">
                     <h3>N° de Consecutivo</h3>
                     <input type="text" id="consecutivo" class="form-control" name="consecutivo" placeholder="Ej: 01, 02" />
@@ -110,7 +128,7 @@
         <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx">
         <p id="msg"></p>
 
-        
+
         <button class="btn btn-success mt-3">Guardar Documento</button>
 
     </form>

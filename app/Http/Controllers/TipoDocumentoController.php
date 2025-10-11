@@ -13,7 +13,9 @@ class TipoDocumentoController extends Controller
      */
     public function index()
     {
-        //
+        $tp = TipoDocumento::All();
+        return response()->json(["tp" => $tp]);
+
     }
 
     /**

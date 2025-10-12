@@ -14,6 +14,7 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/agregarDocumento', [DocumentoController::class, 'viewAgregarDoc']);
+Route::get('/agregarDocumento', [DocumentoController::class, 'create']);
+Route::post('/agregarDocumento', [DocumentoController::class, 'store']);
 
 Route::post('/login', [UsuarioController::class, 'login']);

@@ -13,17 +13,18 @@
 
     <h1 class="text-center">Agregar Documento</h1>
 
-    <form class="p-1">
+    <form action="agregarDocumento" method="POST" class="p-1">
         @csrf
 
         <!-- Identificacion del documento -->
 
-        <div class="p-5 mt-5">
+        <div class="card m-3 p-3 mt-5">
+            <h3 class="text-center mb-5">Identificacion del documento</h3>
             <div class="row">
                 <div class="col-3">
                     <h3>Proceso</h3>
 
-                    @if (!isset($datos[0]) and !isset($datos[1]) )
+                    @if (!isset($datos[0]) and !isset($datos[1]) and !isset($datos[2]) )
                     <script>
                         setTimeout(() => {
                             const msg = "No se han cargado los datos";
@@ -36,7 +37,7 @@
 
                     <select name="proceso" class="form-control" id="proceso">
                         @foreach ($datos[0] as $proceso)
-                            <option value="{{ $proceso->idProceso }}">{{ $proceso->nombreProceso.' - ' . $proceso->prefijo}}</option>
+                        <option value="{{ $proceso->idProceso }}">{{ $proceso->nombreProceso.' - ' . $proceso->prefijo}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -44,7 +45,7 @@
                     <h3>Tipo de Documento</h3>
                     <select name="tipoDocumento" class="form-control" id="tipoDocumento">
                         @foreach ($datos[1] as $tp)
-                            <option value="{{ $tp->idTipoDocumento }}">{{ $tp->nombreDocumento.' - ' . $tp->prefijo }}</option>
+                        <option value="{{ $tp->idTipoDocumento }}">{{ $tp->nombreDocumento.' - ' . $tp->prefijo }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -75,64 +76,108 @@
 
         </br>
 
+        <div class="card m-3 p-3 mt-5">
+            <h3 class="text-center mb-5">Control de version</h3>
 
-        <h1>Fecha de creacion</h1>
-        <input type="date" id="fechaCreacion" class="form-control" name="fechaCreacion" />
+            <div class="row">
+                <div class="col-4">
+                    <h1>Fecha de creacion</h1>
+                    <input type="date" id="fechaCreacion" class="form-control" name="fechaCreacion" />
+                </div>
+                <div class="col-4">
+                    <h1>Fecha de version</h1>
+                    <input type="date" id="fechaVersion" class="form-control" name="fechaVersion" />
+                </div>
+                <div class="col-4">
+                    <h1>Numero de version</h1>
+                    <input type="number" id="numeroVersion" class="form-control" name="numeroVersion" />
+                </div>
+            </div>
 
-        </br>
-        <h1>Fecha de version</h1>
-        <input type="date" id="fechaVersion" class="form-control" name="fechaVersion" />
+            <div class="row mt-5">
+                <div class="col-4">
+                    <h1>Fecha de revision</h1>
+                    <input type="date" id="fechaRevision" class="form-control" name="fechaRevision" />
+                </div>
+                <div class="col-4">
+                    <h1>Numero de revision</h1>
+                    <input type="number" id="numeroRevision" class="form-control" name="numeroRevision" />
+                </div>
+                <div class="col-4">
+                    <h1>Responsable</h1>
+                    <select name="responsable" class="form-control" id="responsable">
+                        @foreach ($datos[2] as $rol)
+                        <option value="{{ $rol->idRol }}">{{ $rol->nombreRol}}</option>
+                        @endforeach
 
-        </br>
-        <h1>Numero de version</h1>
-        <input type="number" id="numeroVersion" class="form-control" name="numeroVersion" />
+                    </select>
+                </div>
+            </div>
 
-        </br>
-        <h1>Fecha de revision</h1>
-        <input type="date" id="fechaRevision" class="form-control" name="fechaRevision" />
-
-        </br>
-        <h1>Numero de revision</h1>
-        <input type="number" id="numeroRevision" class="form-control" name="numeroRevision" />
-
-        </br>
-        <h1>Responsable</h1>
-        <select name="responsable" class="form-control" id="responsable">
-            <option value="responsable1">Coordinador sistema de gestion</option>
-            <option value="responsable2">Responsable del proceso</option>
-            <option value="responsable2">Gerente</option>
-            <option value="responsable2">Director Tecnico</option>
-            <option value="responsable2">Auxiliar de ingreso</option>
-
-        </select>
-
-
+        </div>
 
 
         <!-- Control de cambios -->
 
 
-        </br>
-        <h1>Numero de Version</h1>
-        <input type="date" id="v_Actualizada" class="form-control" name="v_Actualizada" />
+        <div class="card m-3 p-3 mt-5">
+            <h3 class="text-center mb-5">Control de cambios</h3>
+
+            <div class="row">
+                <div class="col-4">
+                    <h1>Numero de Version</h1>
+                    <input type="date" id="v_Actualizada" class="form-control" name="v_Actualizada" />
+                </div>
+                <div class="col-4">
+                    <h1>Numeral</h1>
+                    <input type="number" id="numeral" class="form-control" name="numeral" />
+                </div>
+                <div class="col-4">
+                    <h1>Oservaciones</h1>
+                    <input type="date" id="observaciones" class="form-control" name="observaciones" />
+                </div>
+
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h1 class="text-center">Adjuntar documento:</h1>
+                    <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                    <p id="msg"></p>
+                </div>
+            </div>
+        </div>
+
+
+
 
         </br>
-        <h1>Numeral</h1>
-        <input type="number" id="numeral" class="form-control" name="numeral" />
+
 
         </br>
-        <h1>Oservaciones</h1>
-        <input type="date" id="observaciones" class="form-control" name="observaciones" />
 
-        <h1>Adjuntar documento:</h1>
-        <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx">
-        <p id="msg"></p>
 
+        </br>
 
         <button class="btn btn-success mt-3">Guardar Documento</button>
 
+
+        @if (isset($mensaje))
+
+        <script>
+            setTimeout(() => {
+                const msg = @json($mensaje);
+                alert(msg);
+
+            }, 0.05);
+        </script>
+        @endif
+
+
     </form>
     <script src="{{ asset('/js/style.js') }}"></script>
+
+
+
 
 
 </body>

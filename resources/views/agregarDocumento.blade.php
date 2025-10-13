@@ -13,7 +13,7 @@
 
     <h1 class="text-center">Agregar Documento</h1>
 
-    <form action="agregarDocumento" method="POST" class="p-1">
+    <form action="agregarDocumento" method="POST" class="p-1" enctype="multipart/form-data">
         @csrf
 
         <!-- Identificacion del documento -->
@@ -22,7 +22,7 @@
             <h3 class="text-center mb-5">Identificacion del documento</h3>
             <div class="row">
                 <div class="col-3">
-                    <h3>Proceso</h3>
+                    <h3 class="text-center">Proceso</h3>
 
                     @if (!isset($datos[0]) and !isset($datos[1]) and !isset($datos[2]) )
                     <script>
@@ -35,27 +35,29 @@
 
                     @endif
 
-                    <select name="proceso" class="form-control" id="proceso">
+                    <select name="idProceso" class="form-control" id="idProceso">
                         @foreach ($datos[0] as $proceso)
                         <option value="{{ $proceso->idProceso }}">{{ $proceso->nombreProceso.' - ' . $proceso->prefijo}}</option>
                         @endforeach
                     </select>
+
                 </div>
                 <div class="col-3">
-                    <h3>Tipo de Documento</h3>
-                    <select name="tipoDocumento" class="form-control" id="tipoDocumento">
+                    <h3 class="text-center">Tipo de Documento</h3>
+                    <select name="idTipoDocumento" class="form-control" id="idTipoDocumento">
                         @foreach ($datos[1] as $tp)
                         <option value="{{ $tp->idTipoDocumento }}">{{ $tp->nombreDocumento.' - ' . $tp->prefijo }}</option>
                         @endforeach
                     </select>
+                    
                 </div>
 
                 <div class="col-3">
-                    <h3>N° de Consecutivo</h3>
+                    <h3 class="text-center">N° de Consecutivo</h3>
                     <input type="text" id="consecutivo" class="form-control" name="consecutivo" placeholder="Ej: 01, 02" />
                 </div>
                 <div class="col-3">
-                    <h3>Nombre del documento</h3>
+                    <h3 class="text-center">Nombre del documento</h3>
                     <input type="text" id="nombreDocumento" class="form-control" name="nombreDocumento" />
                 </div>
 
@@ -81,30 +83,30 @@
 
             <div class="row">
                 <div class="col-4">
-                    <h1>Fecha de creacion</h1>
+                    <h1 class="text-center">Fecha de creacion</h1>
                     <input type="date" id="fechaCreacion" class="form-control" name="fechaCreacion" />
                 </div>
                 <div class="col-4">
-                    <h1>Fecha de version</h1>
+                    <h1 class="text-center">Fecha de version</h1>
                     <input type="date" id="fechaVersion" class="form-control" name="fechaVersion" />
                 </div>
                 <div class="col-4">
-                    <h1>Numero de version</h1>
+                    <h1 class="text-center">Numero de version</h1>
                     <input type="number" id="numeroVersion" class="form-control" name="numeroVersion" />
                 </div>
             </div>
 
             <div class="row mt-5">
                 <div class="col-4">
-                    <h1>Fecha de revision</h1>
+                    <h1 class="text-center">Fecha de revision</h1>
                     <input type="date" id="fechaRevision" class="form-control" name="fechaRevision" />
                 </div>
                 <div class="col-4">
-                    <h1>Numero de revision</h1>
+                    <h1 class="text-center">Numero de revision</h1>
                     <input type="number" id="numeroRevision" class="form-control" name="numeroRevision" />
                 </div>
                 <div class="col-4">
-                    <h1>Responsable</h1>
+                    <h1 class="text-center">Responsable</h1>
                     <select name="responsable" class="form-control" id="responsable">
                         @foreach ($datos[2] as $rol)
                         <option value="{{ $rol->idRol }}">{{ $rol->nombreRol}}</option>
@@ -124,20 +126,18 @@
             <h3 class="text-center mb-5">Control de cambios</h3>
 
             <div class="row">
-                <div class="col-4">
-                    <h1>Numero de Version</h1>
-                    <input type="date" id="v_Actualizada" class="form-control" name="v_Actualizada" />
+                <div class="col-6">
+                    <h1 class="text-center">Numero de Version</h1>
+                    <input type="number" id="v_Actualizada" class="form-control" name="v_Actualizada" />
                 </div>
-                <div class="col-4">
-                    <h1>Numeral</h1>
-                    <input type="number" id="numeral" class="form-control" name="numeral" />
-                </div>
-                <div class="col-4">
-                    <h1>Oservaciones</h1>
-                    <input type="date" id="observaciones" class="form-control" name="observaciones" />
+                <div class="col-6">
+                    <h1 class="text-center">Numeral</h1>
+                    <input type="text" id="numeral" class="form-control" name="numeral" />
                 </div>
 
             </div>
+            
+            
             <div class="row mt-5">
                 <div class="col-12">
                     <h1 class="text-center">Adjuntar documento:</h1>
@@ -145,6 +145,16 @@
                     <p id="msg"></p>
                 </div>
             </div>
+
+
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h1 class="text-center">Observaciones</h1>
+                    <textarea name="observaciones" id="observaciones" class="form-control" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+
+
         </div>
 
 
@@ -161,13 +171,13 @@
         <button class="btn btn-success mt-3">Guardar Documento</button>
 
 
-        @if (isset($mensaje))
+        <!-- Mostrar mensaje -->
+        @if (isset($mensaje) )
 
         <script>
             setTimeout(() => {
                 const msg = @json($mensaje);
                 alert(msg);
-
             }, 0.05);
         </script>
         @endif

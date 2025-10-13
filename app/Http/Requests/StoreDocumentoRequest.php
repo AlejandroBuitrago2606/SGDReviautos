@@ -11,18 +11,27 @@ class StoreDocumentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'idProceso'       => 'required|integer',
+            'idTipoDocumento' => 'required|integer',
+            'consecutivo'     => 'required|string|max:10',
+            'nombreDocumento' => 'required|string|max:60',
+            // si tus fechas vienen como dd/mm/YYYY cambia a date_format
+            'fechaCreacion'   => 'required|date_format:Y-m-d',
+            'fechaVersion'    => 'required|date_format:Y-m-d',
+            'numeroVersion'   => 'required|integer', 
+            'fechaRevision'   => 'required|date_format:Y-m-d',
+            'numeroRevision'  => 'required|integer',
+            // si puede no enviarse:
+            'v_Actualizada'   => 'sometimes|nullable|integer',
+            'numeral'         => 'nullable|string|max:20',
+            'observaciones'   => 'nullable|string|max:200',
+            'archivo'         => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:5120',
         ];
     }
 }

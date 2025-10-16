@@ -20,7 +20,8 @@ class DocumentoController extends Controller
      */
     public function index()
     {
-        //
+        $lista_documentos = Documento::all();
+        return view('indexDocumentos', ["documentos" => $lista_documentos]);
     }
 
     /**
@@ -67,7 +68,7 @@ class DocumentoController extends Controller
                 "rutaArchivo" => $rutaArchivo
             ]);
 
-            return response()->json(["mensaje" => "Documento guardado exitosamente"], 201);
+            return view('/indexDocumentos');
         } catch (ValidationException $e) {
             return response()->json(["Error al guardar documento, Verifica los datos ingresados"], 400);
         }

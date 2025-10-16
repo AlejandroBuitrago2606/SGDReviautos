@@ -16,10 +16,11 @@ Route::get('/login', function () {
 
 Route::get('/agregarDocumento', [DocumentoController::class, 'create']);
 
+
 Route::post('/agregarDocumento', [DocumentoController::class, 'store']);
+
 
 Route::post('/login', [UsuarioController::class, 'login']);
 
-Route::get('/indexDocumentos', function () {
-    return view('indexDocumentos');
-});
+
+Route::get('/indexDocumentos', [DocumentoController::class, 'index']);

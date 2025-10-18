@@ -28,7 +28,7 @@ class StoreDocumentoRequest extends FormRequest
             'numeroRevision'  => 'required|integer',
             'v_Actualizada'   => 'sometimes|nullable|integer',
             'numeral'         => 'nullable|string|max:20',
-            'observaciones'   => 'nullable|string|max:200',
+            'observaciones'   => 'nullable|string|max:1500',
             'archivo'         => 'required|file|mimes:pdf,doc,docx,xls,xlsx|max:51200',
             
         ];

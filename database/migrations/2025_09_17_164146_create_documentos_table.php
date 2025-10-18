@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer("n_revision");
             $table->integer("n_version_actualizada")->nullable();
             $table->string("numeral", 20)->nullable();
-            $table->string("observaciones", 200)->nullable();
+            $table->string("observaciones", 1500)->nullable();
             $table->string("rutaArchivo", 200);
             $table->foreignId("idProceso")->constrained('proceso', 'idProceso')->onUpdate("cascade")->onDelete("cascade");
             $table->foreignId("idTipoDocumento")->constrained('tipoDocumento', 'idTipoDocumento')->onUpdate("cascade")->onDelete("cascade");

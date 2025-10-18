@@ -15,49 +15,54 @@
 
     <h1 class="text-center">Documentos Agregados</h1>
 
-    <form action="/indexDocumentos" class="d-flex justify-content-center mb-4">
-        @csrf
+    <!-- Hacer scroll si el contenido es muy largo -->
 
-        <div class="form-card">
+    <div style="overflow-y: auto;">
 
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre Documento</th>
-                            <th scope="col">Consecutivo</th>
-                            <th scope="col">Versión Actualizada</th>
-                            <th scope="col">Fecha de Creación</th>
-                            <th scope="col">Observaciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <form action="/indexDocumentos" class="d-flex justify-content-center mb-4">
+            @csrf
 
-                        @if (!isset($lista_documentos) || count($lista_documentos) === 0)
-                        <tr>
-                            <td colspan="6" class="text-center">No hay documentos agregados.</td>
-                        </tr>
+            <div class="form-card">
 
-                        @endif
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre Documento</th>
+                                <th scope="col">Consecutivo</th>
+                                <th scope="col">Versión Actualizada</th>
+                                <th scope="col">Fecha de Creación</th>
+                                <th scope="col">Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        @foreach ($documentos as $doc)
-                        <tr>
-                            <th scope="row">{{ $doc->idDocumento }}</th>
-                            <td>{{ $doc->nombre }}</td>
-                            <td>{{ $doc->consecutivo }}</td>
-                            <td>{{ $doc->n_version_actualizada }}</td>
-                            <td>{{ $doc->created_at  }}</td>
-                            <td>{{ $doc->observaciones }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            @if (!isset($documentos) || count($documentos) === 0)
+                            <tr>
+                                <td colspan="6" class="text-center">No hay documentos agregados.</td>
+                            </tr>
+
+                            @endif
+
+                            @foreach ($documentos as $doc)
+                            <tr>
+                                <th scope="row">{{ $doc->idDocumento }}</th>
+                                <td>{{ $doc->nombre }}</td>
+                                <td>{{ $doc->consecutivo }}</td>
+                                <td>{{ $doc->n_version_actualizada }}</td>
+                                <td>{{ $doc->created_at  }}</td>
+                                <td>{{ $doc->observaciones }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
-        </div>
-
-    </form>
+        </form>
+    </div>
 </body>
 
 </html>

@@ -49,7 +49,7 @@
                         <option value="{{ $tp->idTipoDocumento }}">{{ $tp->nombreDocumento.' - ' . $tp->prefijo }}</option>
                         @endforeach
                     </select>
-                    
+
                 </div>
 
                 <div class="col-3">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-4">
                     <h1 class="text-center">Numero de version</h1>
-                    <input type="number" id="numeroVersion" class="form-control" name="numeroVersion" />
+                    <input type="number" placeholder="1, 2, 3" id="numeroVersion" class="form-control" name="numeroVersion" />
                 </div>
             </div>
 
@@ -136,8 +136,8 @@
                 </div>
 
             </div>
-            
-            
+
+
             <div class="row mt-5">
                 <div class="col-12">
                     <h1 class="text-center">Adjuntar documento:</h1>
@@ -171,16 +171,21 @@
         <button class="btn btn-success mt-3">Guardar Documento</button>
 
 
-        <!-- Mostrar mensaje -->
-        @if (isset($mensaje) )
+        <!-- Recibir el mensaje y mostrarlo en un alert y luego redirigir a otra page? -->
 
+        @if(isset($documentoCreado))
         <script>
-            setTimeout(() => {
-                const msg = @json($mensaje);
-                alert(msg);
-            }, 0.05);
+           
+
+                setTimeout(() => {
+                    const msg = @json($documentoCreado);
+                    alert(msg);
+                }, 0.05);
+                window.location.href = "/indexDocumentos";
+          
         </script>
         @endif
+
 
 
     </form>

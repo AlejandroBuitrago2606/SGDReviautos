@@ -21,7 +21,7 @@ class DocumentoController extends Controller
     public function index()
     {
         $lista_documentos = Documento::all();
-        return view('indexDocumentos', ["documentos" => $lista_documentos]);
+        return view('/indexDocumentos', ['documentos' => $lista_documentos]);
     }
 
     /**
@@ -33,7 +33,7 @@ class DocumentoController extends Controller
         $tp = TipoDocumento::All();
         $roles = Rol::all();
         $datos = [$procesos, $tp, $roles];
-        return view('/agregarDocumento', ["datos" => $datos]);
+        return view('/agregarDocumento', ['datos' => $datos]);
     }
 
     /**
@@ -51,7 +51,7 @@ class DocumentoController extends Controller
                 throw new Exception("Error al guardar el archivo", 500);
             }
 
-            
+
             Documento::create([
                 "consecutivo" => $datos["consecutivo"],
                 "nombre" => $datos["nombreDocumento"],
@@ -68,9 +68,11 @@ class DocumentoController extends Controller
                 "rutaArchivo" => $rutaArchivo
             ]);
 
-            return view('/indexDocumentos');
+            //retorno la vista con mensaje de exito pero trayendo el metodo create
+            return $this->create()->with('documentoCreado', 'Documento guardado exitosamente');
+
         } catch (ValidationException $e) {
-            return response()->json(["Error al guardar documento, Verifica los datos ingresados"], 400);
+            return response()->json(['documentoCreado'=>'Error al guardar documento, Verifica los datos ingresados'], 400);
         }
     }
 
@@ -132,28 +134,4 @@ class DocumentoController extends Controller
         return $rutaArchivo;
     }
 
-    private function parsearDatos($datos)
-    {
-
-
-        //parsear idProceso y idTipoDocumento a enteros
-        $datos["idProceso"] = (int)$datos["idProceso"];
-        $datos["idTipoDocumento"] = (int)$datos["idTipoDocumento"];
-
-        //parsear numeroVersion, numeroRevision y v_Actualizada a enteros
-        $datos["numeroVersion"] = (int)$datos["numeroVersion"];
-        $datos["numeroRevision"] = (int)$datos["numeroRevision"];
-        if (isset($datos["v_Actualizada"])) {
-            $datos["v_Actualizada"] = (int)$datos["v_Actualizada"];
-        } else {
-            $datos["v_Actualizada"] = null;
-        }
-
-        // parsear fechas a formato Y-m-d
-        $datos["fechaCreacion"] = date('Y-m-d', strtotime($datos["fechaCreacion"]));
-        $datos["fechaVersion"] = date('Y-m-d', strtotime($datos["fechaVersion"]));
-        $datos["fechaRevision"] = date('Y-m-d', strtotime($datos["fechaRevision"]));
-
-        return $datos;
-    }
 }

@@ -2,7 +2,7 @@ const input = document.getElementById('archivo');
 const msg = document.getElementById('msg');
 
 const maxSize = 50 * 1024 * 1024; // Tamaño maximo en bytes 50MB  
-const allowed = ['pdf', 'doc', 'docx', 'xls', 'xlsx']; // Extensiones permitidas
+const allowed = ['pdf', 'doc', 'docx', 'xls', 'xlsx','jpg','jpeg','png']; // Extensiones permitidas
 
 input.addEventListener('change', () => {
   const files = Array.from(input.files);

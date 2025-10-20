@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('documento', function (Blueprint $table) {
             $table->id("idDocumento");
             $table->string("consecutivo", 10);
-            $table->string("nombre", 60);
+            $table->string("nombre", 200);
             $table->date("fechaCreacion");
             $table->date("fechaVersion");
             $table->integer("n_version");

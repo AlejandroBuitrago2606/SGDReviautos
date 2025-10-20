@@ -72,7 +72,8 @@ class DocumentoController extends Controller
             return $this->create()->with('documentoCreado', 'Documento guardado exitosamente');
 
         } catch (ValidationException $e) {
-            return response()->json(['documentoCreado'=>'Error al guardar documento, Verifica los datos ingresados'], 400);
+            
+            return $this->create()->with('documentoCreado', $e->getMessage());
         }
     }
 
@@ -126,6 +127,7 @@ class DocumentoController extends Controller
 
             // Guardar el archivo en storage/app/public/documentos/...
             $rutaArchivo = $file->storeAs($folder, $filename, 'public');
+            
         } catch (Exception $e) {
             // Manejar error (puedes registrar el error o lanzar una excepción)
             throw new Exception('Error al guardar el archivo: ' . $e->getMessage());
@@ -134,4 +136,4 @@ class DocumentoController extends Controller
         return $rutaArchivo;
     }
 
-}
+}   

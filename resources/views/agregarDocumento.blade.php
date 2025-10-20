@@ -55,10 +55,20 @@
                 <div class="col-3">
                     <h3 class="text-center">N° de Consecutivo</h3>
                     <input type="text" id="consecutivo" class="form-control" name="consecutivo" placeholder="Ej: 01, 02" />
+
+                    @error('consecutivo')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
                 </div>
                 <div class="col-3">
                     <h3 class="text-center">Nombre del documento</h3>
                     <input type="text" id="nombreDocumento" class="form-control" name="nombreDocumento" />
+
+                    @error('nombreDocumento')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
                 </div>
 
             </div>
@@ -85,14 +95,28 @@
                 <div class="col-4">
                     <h1 class="text-center">Fecha de creacion</h1>
                     <input type="date" id="fechaCreacion" class="form-control" name="fechaCreacion" />
+
+                    @error('fechaCreacion')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
                 </div>
                 <div class="col-4">
                     <h1 class="text-center">Fecha de version</h1>
                     <input type="date" id="fechaVersion" class="form-control" name="fechaVersion" />
+
+                    @error('fechaVersion')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
                 </div>
                 <div class="col-4">
                     <h1 class="text-center">Numero de version</h1>
                     <input type="number" placeholder="1, 2, 3" id="numeroVersion" class="form-control" name="numeroVersion" />
+
+                    @error('numeroVersion')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
@@ -100,10 +124,20 @@
                 <div class="col-4">
                     <h1 class="text-center">Fecha de revision</h1>
                     <input type="date" id="fechaRevision" class="form-control" name="fechaRevision" />
+
+                    @error('fechaRevision')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
                 </div>
                 <div class="col-4">
                     <h1 class="text-center">Numero de revision</h1>
                     <input type="number" id="numeroRevision" class="form-control" name="numeroRevision" />
+
+                    @error('numeroRevision')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
                 </div>
                 <div class="col-4">
                     <h1 class="text-center">Responsable</h1>
@@ -141,9 +175,14 @@
             <div class="row mt-5">
                 <div class="col-12">
                     <h1 class="text-center">Adjuntar documento:</h1>
-                    <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                    <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" />
                     <p id="msg"></p>
                 </div>
+
+                @error('archivo')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+
             </div>
 
 
@@ -169,20 +208,17 @@
         </br>
 
         <button class="btn btn-success mt-3">Guardar Documento</button>
-
+                        
 
         <!-- Recibir el mensaje y mostrarlo en un alert y luego redirigir a otra page? -->
 
         @if(isset($documentoCreado))
         <script>
-           
-
-                setTimeout(() => {
-                    const msg = @json($documentoCreado);
-                    alert(msg);
-                }, 0.05);
-                window.location.href = "/indexDocumentos";
-          
+            setTimeout(() => {
+                const msg = @json($documentoCreado);
+                alert(msg);
+            }, 0.05);
+            window.location.href = "/indexDocumentos";
         </script>
         @endif
 

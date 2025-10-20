@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', function () {
@@ -24,3 +25,6 @@ Route::post('/login', [UsuarioController::class, 'login']);
 
 
 Route::get('/indexDocumentos', [DocumentoController::class, 'index']);
+
+
+Route::get('/dashboard', [DashboardController::class, 'create']);

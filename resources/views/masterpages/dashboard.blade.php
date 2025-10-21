@@ -40,7 +40,7 @@
                 <img src="{{ asset('/images/logoReviautos.png') }}" alt="CDA logo" style="width: 290px; height: 80px; ml-5">
             </div>
 
-            @if (!isset($datos) )
+            @if (!isset($procesos) )
             <script>
                 setTimeout(() => {
                     const msg = "No se han cargado los datos";
@@ -52,7 +52,7 @@
             @endif
 
 
-            @foreach ($datos as $proceso)
+            @foreach ($procesos as $proceso)
             <div class="menu-item">
                 <div class="menu-header">
 
@@ -75,15 +75,17 @@
             </div>
         </div>
 
-        <a href="/agregarDocumento" >Agregar Documento </a>
+  
 
     </form>
 
 
     <!-- Main Content -->
     <div class="main-content">
-        <a href="/agregarDocumento" >Agregar Documento </a>   
+      
         @yield('content')
+     
+
 
     </div>
 

@@ -18,8 +18,8 @@ class DashboardController extends Controller
 
     public function create()
     {
-        $procesos = Proceso::all();
-        return view('masterpages.dashboard', ['datos' => $procesos]);
+       
+        return view('masterpages.dashboard');
     }
 
 

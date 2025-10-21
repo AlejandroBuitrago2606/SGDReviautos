@@ -31,7 +31,7 @@ class DocumentoController extends Controller
     {
         $procesos = Proceso::all();
         $tp = TipoDocumento::All();
-        $roles = Rol::all();
+        $roles = Rol::all();    
         $datos = [$procesos, $tp, $roles];
         return view('/agregarDocumento', ['datos' => $datos]);
     }

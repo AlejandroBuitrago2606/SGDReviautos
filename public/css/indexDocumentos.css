@@ -73,7 +73,7 @@
 
 .table-header {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr;
     background: #f8f9fa;
     padding: 20px 30px;
     font-weight: 700;
@@ -84,7 +84,7 @@
 
 .table-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 0.5fr;
     padding: 25px 30px;
     border-bottom: 1px solid #e0e0e0;
     align-items: center;

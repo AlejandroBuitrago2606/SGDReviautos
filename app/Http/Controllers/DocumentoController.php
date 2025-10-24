@@ -63,6 +63,7 @@ class DocumentoController extends Controller
                 "n_version_actualizada" => $datos["v_Actualizada"],
                 "numeral" => $datos["numeral"],
                 "observaciones" => $datos["observaciones"],
+                "responsable" => $datos["responsable"],
                 "idProceso" => $datos["idProceso"],
                 "idTipoDocumento" => $datos["idTipoDocumento"],
                 "rutaArchivo" => $rutaArchivo

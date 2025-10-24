@@ -20,6 +20,7 @@ class Documento extends Model
         'n_version_actualizada',
         'numeral',
         'observaciones',
+        'responsable',
         'rutaArchivo',
         'idProceso',
         'idTipoDocumento'

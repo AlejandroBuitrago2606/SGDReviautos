@@ -14,15 +14,15 @@
 <div class="main-content" style="margin-left: 1px;">
     <h1 class="page-title">Gestión y planeación estratégica</h1>
 
-    <button class="btn-add-top">
-        <span style="font-size: 20px; font-weight: bold;">+</span>
+    <a class="btn-add-top" href="{{ url('agregarDocumento') }}" style="text-decoration: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11 13H6q-.425 0-.712-.288T5 12t.288-.712T6 11h5V6q0-.425.288-.712T12 5t.713.288T13 6v5h5q.425 0 .713.288T19 12t-.288.713T18 13h-5v5q0 .425-.288.713T12 19t-.712-.288T11 18z"/></svg>
         Agregar
-    </button>
+    </a>
 
     <div class="documents-table">
         <div class="table-header">
-            <div></div>
-            <div style="text-align: center;">Descargar</div>
+            <div style="text-align: center;">Nombre del Documento</div>
+            <div style="text-align: center;">Descargar</div>    
             <div style="text-align: center;">Ver</div>
             <div style="text-align: center;">Editar</div>
             <div style="text-align: center;">Eliminar</div>
@@ -93,8 +93,8 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
                         <div class="row g-3">
-                            
-                        <!-- Información Principal -->
+
+                            <!-- Información Principal -->
 
 
                             <div class="col-md-6">
@@ -137,7 +137,7 @@
                             </div>
 
 
-                            <!-- Versiones --> 
+                            <!-- Versiones -->
 
                             <div class="col-md-4">
                                 <div class="detail-item">
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <!-- Información Adicional -->
 
                             <div class="col-12">
@@ -193,6 +193,58 @@
 
 
         @endforeach
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="modal fade modal-xl" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 </div>

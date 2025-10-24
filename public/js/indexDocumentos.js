@@ -27,9 +27,6 @@ document.querySelectorAll('.btn-delete').forEach(btn => {
     });
 });
 
-document.querySelector('.btn-add-top').addEventListener('click', function () {
-    alert('Agregando nuevo documento...');
-});
 
 
 

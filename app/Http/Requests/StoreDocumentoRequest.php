@@ -19,7 +19,7 @@ class StoreDocumentoRequest extends FormRequest
         return [
             
             'idProceso'       => 'required|integer',
-            'idTipoDocumento' => 'required|integer',
+            'idTipoDocumento' => 'required|integer',            
             'consecutivo'     => 'required|string|max:10',
             'nombreDocumento' => 'required|string|max:200',
             'fechaCreacion'   => 'required|date_format:Y-m-d',
@@ -30,6 +30,7 @@ class StoreDocumentoRequest extends FormRequest
             'v_Actualizada'   => 'sometimes|nullable|integer',
             'numeral'         => 'nullable|string|max:20',
             'observaciones'   => 'nullable|string|max:1500',
+            'responsable'     => 'required|string|max:50',
             'archivo'         => 'required|file|mimes:pdf,doc,docx,xls,xlsx,jpg,jpeg,png|max:51200'
 
         ];

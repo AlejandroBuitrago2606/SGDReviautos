@@ -19,7 +19,7 @@
             <div class="user-info">
                 <div>
                     <div class="greeting">Buenas tardes</div>
-                    <div class="user-name">Lina Maria Ayala</div>
+                    <div class="user-name">Administrador</div>
                 </div>
                 <div class="user-avatar">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@
                 <div class="dropdown">
                     <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
 
-                    </button>
+                    </button>   
                 </div>
             </div>
         </div>
@@ -65,33 +65,30 @@
             @endforeach
 
 
-            <div style="justify-content: center;">
-                <!-- <div class="add-button-container"> -->
-                <button class="btn-add">
-                    <span style="font-size: 20px; font-weight: bold;">+</span>
-                    Agregar
-                </button>
-                <!-- </div> -->
-            </div>
+
+            <button class="btn-add">
+                <span style="font-size: 20px; font-weight: bold;">+</span>
+                Agregar
+            </button>
+
         </div>
 
-  
+
 
     </form>
 
 
-    <!-- Main Content -->
+    <!-- Contenido Principal -->
     <div class="main-content">
-      
+
         @yield('content')
-     
+
 
 
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Toggle menu items (opcional para futura funcionalidad)
         document.querySelectorAll('.menu-header').forEach(header => {
             header.addEventListener('click', function() {
                 const chevron = this.querySelector('.chevron');

@@ -15,16 +15,16 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/indexDocumentos', [DocumentoController::class, 'index']);
 Route::get('/agregarDocumento', [DocumentoController::class, 'create']);
-
-
 Route::post('/agregarDocumento', [DocumentoController::class, 'store']);
+Route::get('/editarDocumento/{id}', [DocumentoController::class, 'edit']);
+Route::put('/editarDocumento', [DocumentoController::class, 'update']);
 
 
 Route::post('/login', [UsuarioController::class, 'login']);
 
 
-Route::get('/indexDocumentos', [DocumentoController::class, 'index']);
-
-
 Route::get('/dashboard', [DashboardController::class, 'create']);
+
+

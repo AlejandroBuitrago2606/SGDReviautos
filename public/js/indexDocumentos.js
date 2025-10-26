@@ -13,14 +13,8 @@ document.querySelectorAll('.btn-view').forEach(btn => {
     });
 });
 
-document.querySelectorAll('.btn-edit').forEach(btn => {
-    btn.addEventListener('click', function () {
-        alert('Editando documento...');
-    });
-});
-
 document.querySelectorAll('.btn-delete').forEach(btn => {
-    btn.addEventListener('click', function () {
+      btn.addEventListener('click', function () {
         if (confirm('¿Está seguro de que desea eliminar este documento?')) {
             alert('Documento eliminado');
         }

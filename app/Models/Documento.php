@@ -10,6 +10,7 @@ class Documento extends Model
     protected $table = 'documento';
     use HasFactory;
     protected $fillable = [
+        'idDocumento',
         'consecutivo',
         'nombre',
         'fechaCreacion',

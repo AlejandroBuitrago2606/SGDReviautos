@@ -104,25 +104,35 @@ class DocumentoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDocumentoRequest $request)
+    public function update(UpdateDocumentoRequest $request, int $id)
     {
         try {
             $datos = $request->validated();
 
-            $ruta_de_archivo = $datos["rutaArchivo"];
-            if (!isset($ruta_de_archivo)) {
+            $ruta_de_archivo = $datos["rutaArchivo"] ? $datos["rutaArchivo"] : null;
+            $archivo = $datos["archivo"] ? $datos["archivo"] : null;
+            $rutaArchivo = null;
 
-                $file = $datos["archivo"];
-                $rutaArchivo = $this->guardarArchivo($file);
+            if (!isset($ruta_de_archivo) && !isset($archivo)) {
+                throw new Exception("No se proporcionó un archivo para actualizar", 400);
+            }
+
+
+
+
+            if (!isset($ruta_de_archivo) && isset($archivo)) {
+
+                $rutaArchivo = $this->guardarArchivo($archivo);
                 if (!isset($rutaArchivo)) {
                     throw new Exception("Error al guardar el archivo", 500);
                 }
-
             } else {
                 $rutaArchivo = $ruta_de_archivo;
             }
 
-            $documento = Documento::where('idDocumento', $datos['idDocumento'])->first();
+
+
+            $documento = Documento::where('idDocumento', $id)->first();
 
             $documento->consecutivo = $datos["consecutivo"];
             $documento->nombre = $datos["nombreDocumento"];
@@ -142,7 +152,6 @@ class DocumentoController extends Controller
             $documento->save();
 
             return redirect('/indexDocumentos')->with('documentoEditado', 'Documento editado exitosamente');
-            
         } catch (ValidationException $e) {
 
             return redirect('/indexDocumentos')->with('documentoEditado', $e->getMessage());

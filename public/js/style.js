@@ -28,68 +28,68 @@ input.addEventListener('change', () => {
 
 //Lógica para eliminar archivo adjuntado previamente
 document.addEventListener('DOMContentLoaded', function () {
-    const btnEliminar = document.getElementById('btn-eliminar-archivo');
-    const inputRuta = document.getElementById('rutaArchivo');
-    const fileInput = document.getElementById('archivo');
-    const previewDiv = document.getElementById('preview-file');
+  const btnEliminar = document.getElementById('btn-eliminar-archivo');
+  const inputRuta = document.getElementById('rutaArchivo');
+  const fileInput = document.getElementById('archivo');
+  const previewDiv = document.getElementById('preview-file');
 
-    btnEliminar.addEventListener('click', function () {
-        // Limpiar el valor del hidden que almacena la ruta
-        inputRuta.value = '';
+  btnEliminar.addEventListener('click', function () {
+    // Limpiar el valor del hidden que almacena la ruta
+    inputRuta.value = '';
 
-        // Ocultar la vista previa
-        previewDiv.style.display = 'none';
+    // Ocultar la vista previa
+    previewDiv.style.display = 'none';
 
-        // Mostrar el campo file
-        fileInput.style.display = 'inline-block';
-    });
+    // Mostrar el campo file
+    fileInput.style.display = 'inline-block';
+  });
 
-    // (Opcional) Si cambian el archivo manualmente, puedes actualizar el nombre / ícono dinámicamente
-    fileInput.addEventListener('change', function (evt) {
-        const file = evt.target.files[0];
-        if (!file) return;
-        const filename = file.name;
-        // actualizar nombre
-        const nombreSpan = document.getElementById('nombre-archivo');
-        if (nombreSpan) nombreSpan.textContent = filename;
-        // actualizar ícono (puedes replicar la lógica de extensión)
-        const ext = filename.split('.').pop().toLowerCase();
-        const iconoSpan = document.getElementById('icono-archivo');
-        if (iconoSpan) {
-            // limpiar contenido
-            iconoSpan.innerHTML = '';
-            let html = '';
-            switch (ext) {
-                case 'pdf':
-                    html = `<i class="fa fa-file-pdf-o" style="color: red;"></i>`;
-                    break;
-                case 'docx':
-                case 'doc':
-                    html = `<i class="fa fa-file-word-o" style="color: blue;"></i>`;
-                    break;
-                case 'xlsx':
-                case 'xls':
-                    html = `<i class="fa fa-file-excel-o" style="color: green;"></i>`;
-                    break;
-                case 'png':
-                case 'jpg':
-                case 'jpeg':
-                    html = `<i class="fa fa-file-image-o" style="color: orange;"></i>`;
-                    break;
-                default:
-                    html = `<i class="fa fa-file-o"></i>`;
-            }
-            iconoSpan.innerHTML = html;
-        }
-    });
+  // (Opcional) Si cambian el archivo manualmente, puedes actualizar el nombre / ícono dinámicamente
+  fileInput.addEventListener('change', function (evt) {
+    const file = evt.target.files[0];
+    if (!file) return;
+    const filename = file.name;
+    // actualizar nombre
+    const nombreSpan = document.getElementById('nombre-archivo');
+    if (nombreSpan) nombreSpan.textContent = filename;
+    // actualizar ícono (puedes replicar la lógica de extensión)
+    const ext = filename.split('.').pop().toLowerCase();
+    const iconoSpan = document.getElementById('icono-archivo');
+    if (iconoSpan) {
+      // limpiar contenido
+      iconoSpan.innerHTML = '';
+      let html = '';
+      switch (ext) {
+        case 'pdf':
+          html = `<i class="fa fa-file-pdf-o" style="color: red;"></i>`;
+          break;
+        case 'docx':
+        case 'doc':
+          html = `<i class="fa fa-file-word-o" style="color: blue;"></i>`;
+          break;
+        case 'xlsx':
+        case 'xls':
+          html = `<i class="fa fa-file-excel-o" style="color: green;"></i>`;
+          break;
+        case 'png':
+        case 'jpg':
+        case 'jpeg':
+          html = `<i class="fa fa-file-image-o" style="color: orange;"></i>`;
+          break;
+        default:
+          html = `<i class="fa fa-file-o"></i>`;
+      }
+      iconoSpan.innerHTML = html;
+    }
+  });
 });
 
 
 
 
-//Validacion de los datos en tiempo real antes de enviar el formulario
+//Validacion de los datos en tiempo real antes de enviar el formulario de creacion de documento
 (function () {
-  const form = document.querySelector('form[action="agregarDocumento"]');
+  const form = document.querySelector('form[action="agregarDocumento"], form[action^="/editarDocumento/"]');
   if (!form) return;
 
   // helpers de UI
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
       default:
-      
+
         return true;
     }
   }
@@ -330,11 +330,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const MAX = 1500;
 
   function updateCounter() {
-    const len = ta.value.length; 
+    const len = ta.value.length;
     counter.textContent = `${len}/${MAX}`;
     if (len > MAX) {
       counter.classList.add('exceeded');
-      
+
       ta.classList.add('is-invalid');
 
       const next = ta.nextElementSibling;
@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     } else {
       counter.classList.remove('exceeded');
-    
+
       ta.classList.remove('is-invalid');
       const next = ta.nextElementSibling;
       if (next && next.classList && next.classList.contains('invalid-feedback-js')) next.remove();

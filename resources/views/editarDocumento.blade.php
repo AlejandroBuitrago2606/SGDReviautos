@@ -8,11 +8,10 @@
 
 <h1 class="text-center">Editar Documento</h1>
 
-<form action="editarDocumento" method="POST" class="p-1" enctype="multipart/form-data">
+<form action="/editarDocumento/{{ $datos[3]->idDocumento }}/edit" method="POST" class="p-1" enctype="multipart/form-data">
+
     @csrf
-
-    @method('PUT')
-
+    @method('PATCH')
 
 
     @if (!isset($datos[0]) and !isset($datos[1]) and !isset($datos[2]) and !isset($datos[3]) )
@@ -23,11 +22,6 @@
         }, 0.05);
     </script>
     @endif
-
-
-
-    <input type="hidden" id="idDocumento" name="idDocumento" value="id Documento: {{ $datos[3]->idDocumento }}" />
-    <h6>{{ $datos[3]->idDocumento }}</h6>
 
 
     <a href="{{ url('indexDocumentos') }}" class="btn-back">
@@ -182,7 +176,7 @@
                     <span class="field-icon"></span>Responsable
                 </label>
 
-                <select name="idRol" class="form-control" id="idRol" required>
+                <select name="responsable" class="form-control" id="responsable" required>
                     @foreach ($datos[2] as $rol)
                     <option value="{{ $rol->nombreRol }}"
                         @if ($rol->nombreRol === $datos[3]->responsable) selected @endif>
@@ -275,7 +269,7 @@
                 <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" />
                 <p id="msg" class="text-center">Formatos permitidos: PDF, Word, Excel, Imágenes (JPG, PNG)</p>
                 {{-- Input oculto que contiene la ruta original --}}
-                <input type="hidden" id="rutaArchivo" name="rutaArchivo" value="{{ $ruta }}" />
+                <input type="text" style="display: none;" id="rutaArchivo" name="rutaArchivo" value="{{ $ruta }}" />
 
                 @error('archivo')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -298,7 +292,7 @@
 
             </div>
         </div>
-        
+
     </div>
 
     <button class="btn-submit">
@@ -312,10 +306,10 @@
 
 
     <!-- Recibir el mensaje y mostrarlo en un alert y luego redirigir a otra page -->
-    @if(isset($documentoCreado))
+    @if(isset($documentoEditado))
     <script>
         setTimeout(() => {
-            const msg = @json($documentoCreado);
+            const msg = @json($documentoEditado);
             alert(msg);
         }, 0.05);
         window.location.href = "/indexDocumentos";

@@ -11,7 +11,7 @@ class UpdateDocumentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,8 +22,7 @@ class UpdateDocumentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
-            'idDocumento'     => 'required|integer',
+
             'idProceso'       => 'required|integer',
             'idTipoDocumento' => 'required|integer',            
             'consecutivo'     => 'required|string|max:10',
@@ -37,7 +36,7 @@ class UpdateDocumentoRequest extends FormRequest
             'numeral'         => 'nullable|string|max:20',
             'observaciones'   => 'nullable|string|max:1500',
             'responsable'     => 'required|string|max:50',
-            'archivo'         => 'required|file|mimes:pdf,doc,docx,xls,xlsx,jpg,jpeg,png|max:51200',
+            'archivo'         => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,jpg,jpeg,png|max:51200',
             'rutaArchivo'     => 'nullable|string|max:200'
 
         ];

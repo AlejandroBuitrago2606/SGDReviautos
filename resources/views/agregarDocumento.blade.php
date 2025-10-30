@@ -198,10 +198,10 @@
         <div class="row mt-4">
             <div class="col-12 field-wrapper">
                 <label class="field-label">
-                    <span class="field-icon"></span>Adjuntar Documento
+                    <span class="field-icon"></span>Adjuntar Documento <p class="text-center">Formatos permitidos: PDF, Word, Excel, Imágenes (JPG, PNG), Maximo: 50MB</p>
                 </label>
                 <input type="file" id="archivo" name="archivo" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" required />
-                <p id="msg" class="text-center">Formatos permitidos: PDF, Word, Excel, Imágenes (JPG, PNG)</p>
+                <p id="msg" class="text-center"></p>
                 @error('archivo')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

@@ -223,7 +223,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return true;
 
+      case 'archivo':
+        const rutaArchivoHidden = form.querySelector('[name="rutaArchivo"]');
 
+
+        if (rutaArchivoHidden && rutaArchivoHidden.value && rutaArchivoHidden.value.trim() !== '') {
+          clearError(field);
+          return true;
+        }
+
+        if (!field.files || field.files.length === 0) {
+          setError(field, 'Debe seleccionar un archivo.');
+          return false;
+        }
+
+        clearError(field);
+        return true;
 
       default:
 
@@ -251,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return ok;
   }
 
-  // ACTUALIZACION DE ESTADO DEL BOTÓN SUBMIT
+  // ACTUALIZACION DE ESTADO DEL BOTÓN 
   function updateSubmitState() {
     const submitBtn = form.querySelector('[type="submit"], .btn-submit');
     if (!submitBtn) return;
@@ -263,6 +278,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const watchSelectors = 'input[name], textarea[name], select[name]';
   const watchables = form.querySelectorAll(watchSelectors);
+
+
+  const fileInput = form.querySelector('input[type="file"][name="archivo"]');
+  if (fileInput) {
+    fileInput.addEventListener('change', function () {
+      validateField(fileInput);
+      updateSubmitState();
+    });
+  }
+
   watchables.forEach(el => {
 
     if (el.tagName.toLowerCase() === 'select') {
@@ -301,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return true;
   });
 
-  //Inicial: Se actualizar botón (por si hay valores cargados)
+
   updateSubmitState();
 
 })();

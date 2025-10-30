@@ -104,25 +104,26 @@ class DocumentoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDocumentoRequest $request, int $id)
+    public function update(UpdateDocumentoRequest $request, int $idDocumento)
     {
         try {
             $datos = $request->validated();
 
-            $ruta_de_archivo = $datos["rutaArchivo"] ? $datos["rutaArchivo"] : null;
-            $archivo = $datos["archivo"] ? $datos["archivo"] : null;
+            $ruta_de_archivo = $datos["rutaArchivo"];
             $rutaArchivo = null;
 
-            if (!isset($ruta_de_archivo) && !isset($archivo)) {
-                throw new Exception("No se proporcionó un archivo para actualizar", 400);
-            }
 
+            if (!isset($ruta_de_archivo)) {
 
+                if (!isset($datos["archivo"])) {
+                    throw new Exception("No se ha proporcionado un archivo para actualizar", 400);
+                }
 
+                $archivo = $datos["archivo"];
 
-            if (!isset($ruta_de_archivo) && isset($archivo)) {
-
+                // se guarda el archivo en el servidor
                 $rutaArchivo = $this->guardarArchivo($archivo);
+
                 if (!isset($rutaArchivo)) {
                     throw new Exception("Error al guardar el archivo", 500);
                 }
@@ -132,7 +133,7 @@ class DocumentoController extends Controller
 
 
 
-            $documento = Documento::where('idDocumento', $id)->first();
+            $documento = Documento::where('idDocumento', $idDocumento)->first();
 
             $documento->consecutivo = $datos["consecutivo"];
             $documento->nombre = $datos["nombreDocumento"];
@@ -151,10 +152,10 @@ class DocumentoController extends Controller
 
             $documento->save();
 
-            return redirect('/indexDocumentos')->with('documentoEditado', 'Documento editado exitosamente');
+            return $this->edit($idDocumento)->with('documentoEditado', 'Documento editado exitosamente');
         } catch (ValidationException $e) {
 
-            return redirect('/indexDocumentos')->with('documentoEditado', $e->getMessage());
+            return $this->edit($idDocumento)->with('documentoEditado', $e->getMessage());
         }
     }
 

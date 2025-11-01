@@ -13,13 +13,13 @@ document.querySelectorAll('.btn-view').forEach(btn => {
     });
 });
 
-document.querySelectorAll('.btn-delete').forEach(btn => {
-      btn.addEventListener('click', function () {
-        if (confirm('¿Está seguro de que desea eliminar este documento?')) {
-            alert('Documento eliminado');
-        }
-    });
-});
+// document.querySelectorAll('.btn-delete').forEach(btn => {
+//       btn.addEventListener('click', function () {
+//         if (confirm('')) {
+//             alert('Documento eliminado');
+//         }
+//     });
+// });
 
 
 

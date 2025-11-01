@@ -162,9 +162,24 @@ class DocumentoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Documento $documento)
+    public function destroy(int $idDocumento)
     {
-        //
+        try {
+            //code...
+
+
+            $documento = Documento::where('idDocumento', $idDocumento)->first();
+            //eliminamos primero el archivo fisico
+            if (Storage::disk('public')->exists($documento->rutaArchivo)) {
+                Storage::disk('public')->delete($documento->rutaArchivo);
+            }
+            $documento->delete();
+
+            return redirect('/indexDocumentos')->with('documentoEliminado', 'Documento eliminado exitosamente');
+        } catch (Exception $e) {
+
+            return redirect('/indexDocumentos')->with('documentoEliminado', 'Error al eliminar el documento: ' . $e->getMessage());
+        }
     }
 
     private function guardarArchivo($file)

@@ -11,6 +11,7 @@ class RolDocumento extends Model
     use HasFactory;
     protected $fillable = [
         'idRol',
-        'idDocumento'
+        'idDocumento',
+        'acceso'
     ];
 }

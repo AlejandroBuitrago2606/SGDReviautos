@@ -26,18 +26,19 @@
             <div style="text-align: center;">Descargar</div>
             <div style="text-align: center;">Ver</div>
             <div style="text-align: center;">Editar</div>
+            <div style="text-align: center;">Acceso</div>
             <div style="text-align: center;">Eliminar</div>
         </div>
 
 
-        @if (!isset($documentos) || count($documentos) === 0)
+        @if (!isset($lista_Datos[0]) || count($lista_Datos[0]) === 0)
         <div class="table-row">
             <div class="document-name">No hay documentos agregados.</div>
         </div>
 
         @endif
 
-        @foreach ($documentos as $doc)
+        @foreach ($lista_Datos[0] as $doc)
 
 
 
@@ -83,6 +84,14 @@
                 </a>
             </div>
             <div class="action-buttons">
+                <button class="action-btn btn-acceso" title="Acceso de archivos" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-number="{{ $doc->idDocumento }}"  @php session(['idDocumento' => $doc->idDocumento]) @endphp  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 24 24">
+                        <path fill="#fff" d="M20.37 21.25a.75.75 0 0 1-.75.75H4.38a.75.75 0 0 1-.75-.75c0-4.1 4.5-7.28 8.37-7.28s8.37 3.18 8.37 7.28M17.1 7.11A5.1 5.1 0 1 1 12 2a5.11 5.11 0 0 1 5.1 5.11" />
+                    </svg>
+
+                </button>
+            </div>
+            <div class="action-buttons">
                 <form method="POST" action="{{ url('eliminarDocumento/'.$doc->idDocumento) }}">
                     @csrf
                     @method('DELETE')
@@ -98,7 +107,7 @@
                             const msg = @json($documentoEliminado);
                             alert(msg);
                         }, 0.05);
-                        window.location.href = "/indexDocumentos";
+                        window.location.href = "{{ url('indexDocumentos') }}";
                     </script>
                     @endif
 
@@ -233,30 +242,125 @@
 
 
 
-
-
-
-
-
-
-
-
-        <div class="modal fade modal-xl" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Usuarios con accceso al documento</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
+                        @if (!isset($lista_Datos[1]) || count($lista_Datos[1]) === 0)
+                        <div class="table-row">
+                            <div class="document-name">No hay roles agregados.</div>
+                        </div>
 
+                        @endif
+
+                        <form action="/acceso" method="POST">
+
+                            @csrf
+
+                            <input type="hidden" id="idDocumentoHidden" name="documentId" value="">
+                            @php
+                                $idDocumentoAcceso = session()->get('idDocumento', 0);
+                            @endphp
+
+                            <!-- Verificamos si ya hay accesos agregados de lo contrario retornar los roles por default -->
+
+                            @if (!isset($lista_Datos[2]) || count($lista_Datos[2]) == 0)
+
+                                <div class="form-card">
+
+                                    @foreach ($lista_Datos[1] as $rol)
+                                    <div class="usuario-item">
+                                        <div class="usuario-info">
+                                            <span class="document-name">{{ $rol->nombreRol }}</span>
+                                        </div>
+
+                                        @if ($rol->idRol !== 6)
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                name="roles[]"
+                                                value="{{ $rol->idRol }}"
+                                                id="switchCheckDefault-{{ $rol->idRol }}">
+                                        </div>
+                                        @endif
+                                    </div>
+
+
+
+
+                                    @if (!$loop->last)
+                                    <div class="usuario-divider"></div>
+                                    @endif
+                                    @endforeach
+
+
+                                </div>
+
+                            @endif
+
+
+    
+                            @if (isset($lista_Datos[2]) && count($lista_Datos[2]) > 0)
+
+                            <div class="form-card">
+
+                                @foreach ($lista_Datos[1] as $rol)
+                                    <div class="usuario-item">
+                                        <div class="usuario-info">
+                                            <span class="document-name">{{ $rol->nombreRol }}</span>
+                                        </div>
+
+                                        <h6>{{ $idDocumentoAcceso }}</h6>
+
+                                        @if ($rol->idRol !== 6)
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input"
+                                                type="checkbox"
+                                                role="switch"
+                                                name="roles[]"
+                                                value="{{ $rol->idRol }}"
+                                                id="switchCheckDefault-{{ $rol->idRol }}"
+
+                                                @foreach ($lista_Datos[2] as $accesoRol)
+                                                @if ($accesoRol->acceso == 1 && $accesoRol->idRol == $rol->idRol && $accesoRol->idDocumento == $idDocumentoAcceso)
+                                                checked
+                                                @endif
+                                                @endforeach
+                                            >
+
+                                        
+                                        </div>
+                                        @endif
+
+                                        
+                                    </div>  
+
+                                    @if (!$loop->last)
+                                        <div class="usuario-divider"></div>
+                                    @endif
+
+
+                                @endforeach
+
+
+                            </div>
+
+                            @endif
+
+
+                        </form>
 
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
                         <button type="button" class="btn btn-primary">Understood</button>
                     </div>
                 </div>

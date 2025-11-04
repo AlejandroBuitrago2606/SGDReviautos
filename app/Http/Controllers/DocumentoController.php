@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreDocumentoRequest;
 use App\Http\Requests\UpdateDocumentoRequest;
+use App\Models\RolDocumento;
+use App\Models\Usuario;
 use Dotenv\Exception\ValidationException;
 use Exception;
 
@@ -19,9 +21,12 @@ class DocumentoController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {        
         $lista_documentos = Documento::all();
-        return view('/indexDocumentos', ['documentos' => $lista_documentos]);
+        $roles = Rol::all();
+        $accesos = RolDocumento::all();
+        $lista_Datos = [$lista_documentos, $roles, $accesos];
+        return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
     }
 
     /**
@@ -175,10 +180,10 @@ class DocumentoController extends Controller
             }
             $documento->delete();
 
-            return redirect('/indexDocumentos')->with('documentoEliminado', 'Documento eliminado exitosamente');
+            return $this->index()->with('documentoEliminado', 'Documento eliminado exitosamente');
         } catch (Exception $e) {
 
-            return redirect('/indexDocumentos')->with('documentoEliminado', 'Error al eliminar el documento: ' . $e->getMessage());
+            return $this->index()->with('documentoEliminado', 'Error al eliminar el documento: ' . $e->getMessage());
         }
     }
 
@@ -187,23 +192,27 @@ class DocumentoController extends Controller
         // Carpeta donde guardar 
         $folder = 'documentos';
         $rutaArchivo = null;
-
         try {
 
             if (! Storage::disk('public')->exists($folder)) {
                 Storage::disk('public')->makeDirectory($folder);
             }
 
-            // Generar nombre único 
-            $filename = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
-                . '.' . $file->getClientOriginalExtension();
 
-            // Guardar el archivo en storage/app/public/documentos/...
+            $timestamp = \Carbon\Carbon::now()->format('Ymd_His');
+            $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $slugName = Str::slug($originalName);
+            $extension = $file->getClientOriginalExtension();
+
+            $filename = $timestamp . '_' . $slugName . '.' . $extension;
+
+
             $rutaArchivo = $file->storeAs($folder, $filename, 'public');
         } catch (Exception $e) {
-            // Manejar error (puedes registrar el error o lanzar una excepción)
+
             throw new Exception('Error al guardar el archivo: ' . $e->getMessage());
         }
+
 
         return $rutaArchivo;
     }

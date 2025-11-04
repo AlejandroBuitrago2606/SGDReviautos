@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\RolDocumentoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,9 +23,13 @@ Route::patch('/editarDocumento/{id}/edit', [DocumentoController::class, 'update'
 Route::delete('/eliminarDocumento/{id}', [DocumentoController::class, 'destroy']);
 
 
+Route::post('/acceso', [RolDocumentoController::class, 'store']);
+
+
 Route::post('/login', [UsuarioController::class, 'login']);
 
 
 Route::get('/dashboard', [DashboardController::class, 'create']);
+
 
 

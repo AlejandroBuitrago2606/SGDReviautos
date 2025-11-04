@@ -13,13 +13,32 @@ document.querySelectorAll('.btn-view').forEach(btn => {
     });
 });
 
-// document.querySelectorAll('.btn-delete').forEach(btn => {
-//       btn.addEventListener('click', function () {
-//         if (confirm('')) {
-//             alert('Documento eliminado');
-//         }
-//     });
-// });
+
+
+
+
+
+
+var myModal = document.getElementById('staticBackdrop');
+myModal.addEventListener('show.bs.modal', function (event) {
+    // Botón que disparó el modal
+    var button = event.relatedTarget;
+    // Extraer el número del atributo data-number
+    var number = button.getAttribute('data-number');
+    // Colocar el número donde queremos
+    var spanNumber = myModal.querySelector('#idDocumentoView');
+    spanNumber.textContent = number;
+    // Si usas input oculto para envío al servidor
+    var hiddenInput = myModal.querySelector('#idDocumentoHidden');
+    hiddenInput.value = number;
+});
+
+
+
+
+
+
+
 
 
 

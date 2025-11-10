@@ -23,6 +23,7 @@ Route::patch('/editarDocumento/{id}/edit', [DocumentoController::class, 'update'
 Route::delete('/eliminarDocumento/{id}', [DocumentoController::class, 'destroy']);
 
 
+Route::get('/acceso/{id}', [RolDocumentoController::class, 'acceso']);
 Route::post('/acceso', [RolDocumentoController::class, 'store']);
 
 

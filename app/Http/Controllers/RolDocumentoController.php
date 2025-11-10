@@ -16,6 +16,13 @@ class RolDocumentoController extends Controller
         //
     }
 
+
+    public function acceso(int $id)
+    {
+        session(['idDocumento' => $id]);
+        return response(null, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

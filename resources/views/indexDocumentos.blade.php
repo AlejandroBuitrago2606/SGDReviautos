@@ -248,27 +248,27 @@
 
 
 
+        <form action="/acceso" method="POST">
 
-
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Usuarios con accceso al documento</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        @if (isset($lista_Datos[2]) && count($lista_Datos[2]) > 0)
-
-                        @if (!isset($lista_Datos[1]) || count($lista_Datos[1]) === 0 && !isset($lista_Datos[2]) || count($lista_Datos[2]) === 0)
-                        <div class="table-row">
-                            <div class="document-name">No hay roles agregados.</div>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Usuarios con accceso al documento</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
 
-                        @endif
+                            @if (isset($lista_Datos[2]) && count($lista_Datos[2]) > 0)
 
-                        <form action="/acceso" method="POST">
+                            @if (!isset($lista_Datos[1]) || count($lista_Datos[1]) === 0 && !isset($lista_Datos[2]) || count($lista_Datos[2]) === 0)
+                            <div class="table-row">
+                                <div class="document-name">No hay roles agregados.</div>
+                            </div>
+
+                            @endif
+
+
 
                             @csrf
 
@@ -276,10 +276,10 @@
                             $idDocSeleccionado = session()->get('idDocumento',0);
                             @endphp
 
-                            <h1>{{ $idDocSeleccionado }}</h1>
+                            <input type="hidden" id="idDocumento" name="idDocumento" value="{{ $idDocSeleccionado }}">
 
                             @foreach ($lista_Datos[1] as $rol)
-                            
+
                             @php
                             // Buscar si el rol tiene acceso al documento seleccionado
                             $accesoRol = collect($lista_Datos[2])->first(function ($item) use ($rol, $idDocSeleccionado) {
@@ -310,28 +310,40 @@
 
 
 
-                        </form>
 
-                        @else
-                        <div class="table-row">
-                            <div class="document-name">No se cargo la informacion correctamente.</div>
+
+                            @else
+                            <div class="table-row">
+                                <div class="document-name">No se cargo la informacion correctamente.</div>
+                            </div>
+                            @endif
+
+
+
+
+
                         </div>
-                        @endif
-
-
-
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Understood</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-primary">Guardar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
+            @if(isset($acceso))
+            <script>
+                setTimeout(() => {
+                    const msg = @json($acceso);
+                    alert(msg);
+                }, 0.05);
+                window.location.href = "{{ url('indexDocumentos') }}";
+            </script>
+            @endif
+
+
+        </form>
     </div>
 
 </div>

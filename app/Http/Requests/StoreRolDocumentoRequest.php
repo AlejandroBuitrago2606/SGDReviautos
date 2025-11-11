@@ -11,7 +11,7 @@ class StoreRolDocumentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreRolDocumentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'roles'   => ['required', 'array'],                 
+            'roles.*' => ['integer', 'exists:rol,idRol'],        
+            'idDocumento' => ['required', 'integer', 'exists:documento,idDocumento'],
         ];
     }
 }

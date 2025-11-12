@@ -22,7 +22,7 @@ class StoreRolDocumentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles'   => ['required', 'array'],                 
+            'roles'   => ['nullable', 'array'],                 
             'roles.*' => ['integer', 'exists:rol,idRol'],        
             'idDocumento' => ['required', 'integer', 'exists:documento,idDocumento'],
         ];

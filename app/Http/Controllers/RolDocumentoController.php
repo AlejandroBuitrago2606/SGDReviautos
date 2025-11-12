@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\RolDocumento;
 use App\Models\Rol;
+use App\Models\Documento;
 use App\Http\Requests\StoreRolDocumentoRequest;
 use App\Http\Requests\UpdateRolDocumentoRequest;
 use Dotenv\Exception\ValidationException;
+use App\Http\Controllers\DocumentoController;
 
 class RolDocumentoController extends Controller
 {
@@ -15,7 +17,11 @@ class RolDocumentoController extends Controller
      */
     public function index()
     {
-        //
+        $lista_documentos = Documento::all();
+        $roles = Rol::all();
+        $accesos = RolDocumento::all();
+        $lista_Datos = [$lista_documentos, $roles, $accesos];
+        return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
     }
 
 
@@ -84,9 +90,10 @@ class RolDocumentoController extends Controller
                 }
             }
 
-            return view('indexDocumentos')->with('acceso', 'Cambios guardados correctamente');
+            return $this->index()->with('acceso', 'Cambios guardados correctamente');
+            
         } catch (ValidationException $e) {
-            return view('indexDocumentos')->with('acceso', 'Ocurrió un error al guardar los cambios: ' . $e->getMessage());
+            return $this->index()->with('acceso', 'Ocurrió un error al guardar los cambios: ' . $e->getMessage());
         }
     }
 

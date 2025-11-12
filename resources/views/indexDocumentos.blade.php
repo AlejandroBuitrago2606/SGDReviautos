@@ -250,14 +250,14 @@
 
         <form action="/acceso" method="POST">
 
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade modal-lg" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Usuarios con accceso al documento</h1>
+                            <h1 class="modal-title fs-4" id="staticBackdropLabel">Usuarios con accceso al documento</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body p-5" >
 
                             @if (isset($lista_Datos[2]) && count($lista_Datos[2]) > 0)
 
@@ -287,7 +287,7 @@
                             });
                             @endphp
 
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch mb-3">
                                 <input
                                     class="form-check-input"
                                     type="checkbox"
@@ -298,11 +298,11 @@
                                 checked disabled
                                 @elseif ($accesoRol && $accesoRol->acceso === 1)
                                 checked
-                                @endif
+                                @endif style="margin-right: 10px;"
                                 >
-                                <label class="form-check-label" for="rol{{ $rol->idRol }}">
+                                <h5 class="form-check-label" style="margin-left: 8px;" for="rol{{ $rol->idRol }}">
                                     {{ $rol->nombreRol }}
-                                </label>
+                                </h5>
                             </div>
                             @endforeach
 
@@ -324,8 +324,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button class="btn btn-primary">Guardar</button>
+                            <button type="button"  class="btn btn-secondary fs-5" data-bs-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-primary fs-5" >Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -338,7 +338,6 @@
                     const msg = @json($acceso);
                     alert(msg);
                 }, 0.05);
-                window.location.href = "{{ url('indexDocumentos') }}";
             </script>
             @endif
 

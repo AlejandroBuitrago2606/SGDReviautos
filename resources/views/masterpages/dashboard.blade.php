@@ -66,7 +66,7 @@
 
 
 
-            <button class="btn-add">
+            <button class="btn-add" type="button">
                 <span style="font-size: 20px; font-weight: bold;">+</span>
                 Agregar
             </button>

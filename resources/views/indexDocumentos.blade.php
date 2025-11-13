@@ -48,7 +48,7 @@
 
                 <div class="form-group">
 
-                    <div class="document-name">{{ $doc->nombre.'--'.$doc->idDocumento }}</div>
+                    <div class="document-name">{{ $doc->nombre}}</div>
 
 
 

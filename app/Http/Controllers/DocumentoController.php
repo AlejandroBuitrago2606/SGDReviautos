@@ -21,12 +21,20 @@ class DocumentoController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {        
-        $lista_documentos = Documento::all();
-        $roles = Rol::all();
-        $accesos = RolDocumento::all();
-        $lista_Datos = [$lista_documentos, $roles, $accesos];
-        return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
+    {
+        $idProceso = session()->get('idProceso', 0);
+
+        if ($idProceso > 0) {
+            $lista_documentos = Documento::where('idProceso', $idProceso)->get();
+            $roles = Rol::all();
+            $accesos = RolDocumento::all();
+            $lista_Datos = [$lista_documentos, $roles, $accesos];
+            return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
+        }
+        else {
+            return view('masterpages.dashboard');
+        }
+
     }
 
     /**
@@ -169,9 +177,9 @@ class DocumentoController extends Controller
      */
     public function destroy(int $idDocumento)
     {
-        try {
-            //code...
 
+
+        try {
 
             $documento = Documento::where('idDocumento', $idDocumento)->first();
             //eliminamos primero el archivo fisico
@@ -215,5 +223,13 @@ class DocumentoController extends Controller
 
 
         return $rutaArchivo;
+    }
+
+
+    public function select(int $id)
+    {
+
+        session(['idProceso' => $id]);
+        return redirect('/indexDocumentos');
     }
 }

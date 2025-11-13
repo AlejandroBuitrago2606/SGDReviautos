@@ -21,6 +21,7 @@ Route::post('/agregarDocumento', [DocumentoController::class, 'store']);
 Route::get('/editarDocumento/{id}', [DocumentoController::class, 'edit']);
 Route::patch('/editarDocumento/{id}/edit', [DocumentoController::class, 'update']);
 Route::delete('/eliminarDocumento/{id}', [DocumentoController::class, 'destroy']);
+Route::get('/traerDocumentos/{id}', [DocumentoController::class, 'select']);
 
 
 Route::get('/acceso/{id}', [RolDocumentoController::class, 'acceso']);

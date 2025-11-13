@@ -11,71 +11,73 @@
 
 <body>
 
-    <form>
-        @csrf
 
-        <!-- Top Header -->
-        <div class="top-header">
-            <div class="user-info">
-                <div>
-                    <div class="greeting">Buenas tardes</div>
-                    <div class="user-name">Administrador</div>
-                </div>
-                <div class="user-avatar">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                    </svg>
-                </div>
-                <div class="dropdown">
-                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
 
-                    </button>   
-                </div>
+    <!-- Top Header -->
+    <div class="top-header">
+        <div class="user-info">
+            <div>
+                <div class="greeting">Buenas tardes</div>
+                <div class="user-name">Administrador</div>
+            </div>
+            <div class="user-avatar">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
+
+                </button>
             </div>
         </div>
+    </div>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo-container">
-                <img src="{{ asset('/images/logoReviautos.png') }}" alt="CDA logo" style="width: 290px; height: 80px; ml-5">
-            </div>
-
-            @if (!isset($procesos) )
-            <script>
-                setTimeout(() => {
-                    const msg = "No se han cargado los datos";
-                    alert(msg);
-
-                }, 0.05);
-            </script>
-
-            @endif
-
-
-            @foreach ($procesos as $proceso)
-            <div class="menu-item">
-                <div class="menu-header">
-
-                    <span>{{ $proceso->nombreProceso.' ('.$proceso->prefijo.')'}}</span>
-                    <!-- <span class="chevron">∨</span> -->
-
-                </div>
-            </div>
-
-            @endforeach
-
-
-
-            <button class="btn-add" type="button">
-                <span style="font-size: 20px; font-weight: bold;">+</span>
-                Agregar
-            </button>
-
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="{{ asset('/images/logoReviautos.png') }}" alt="CDA logo" style="width: 290px; height: 80px; ml-5">
         </div>
 
+        @if (!isset($procesos) )
+        <script>
+            setTimeout(() => {
+                const msg = "No se han cargado los datos";
+                alert(msg);
+
+            }, 0.05);
+        </script>
+
+        @endif
 
 
-    </form>
+
+        @foreach ($procesos as $proceso)
+
+
+        <div class="menu-item">
+            <a class="menu-header sin-subrayado" href="{{ url('traerDocumentos/'.$proceso->idProceso) }}">
+
+                <span>{{ $proceso->nombreProceso.' ('.$proceso->prefijo.')'}}</span>
+                <!-- <span class="chevron">∨</span> -->
+
+            </a>
+        </div>
+
+        @endforeach
+
+
+
+        <button class="btn-add" type="button">
+            <span style="font-size: 20px; font-weight: bold;">+</span>
+            Agregar
+        </button>
+
+    </div>
+
+
+
+
 
 
     <!-- Contenido Principal -->

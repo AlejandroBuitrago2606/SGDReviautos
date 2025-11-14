@@ -9,7 +9,7 @@ class Documento extends Model
 {
     protected $table = 'documento';
     protected $primaryKey = 'idDocumento';
-    
+
     use HasFactory;
     protected $fillable = [
         'idDocumento',
@@ -29,6 +29,10 @@ class Documento extends Model
         'idTipoDocumento'
     ];
 
-    //Agregar campo 'responsable'
-    
+
+
+    public function tipoDocumento()
+    {
+        return $this->belongsTo(TipoDocumento::class, 'idTipoDocumento');
+    }
 }

@@ -25,16 +25,28 @@ class DocumentoController extends Controller
         $idProceso = session()->get('idProceso', 0);
 
         if ($idProceso > 0) {
-            $lista_documentos = Documento::where('idProceso', $idProceso)->get();
+            $lista_documentos = Documento::with('tipoDocumento')
+                ->where('idProceso', $idProceso)
+                ->get();
+                
+            $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
+
+
+            $tp = TipoDocumento::All();
+
+            foreach ($documentosAgrupados as $idTipoDocumento => $docs) {
+                $documentosAgrupados[$tp->find($idTipoDocumento)->nombreDocumento] = $docs;
+                unset($documentosAgrupados[$idTipoDocumento]);
+            }
+
+
             $roles = Rol::all();
             $accesos = RolDocumento::all();
-            $lista_Datos = [$lista_documentos, $roles, $accesos];
+            $lista_Datos = [$documentosAgrupados, $roles, $accesos];
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
-        }
-        else {
+        } else {
             return view('masterpages.dashboard');
         }
-
     }
 
     /**

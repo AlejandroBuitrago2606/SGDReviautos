@@ -238,3 +238,23 @@ body {
 a.sin-subrayado {
     text-decoration: none;
 }
+
+
+
+.hover-link {
+    transition: all 0.3s ease;
+    opacity: 0.85;
+}
+
+.hover-link:hover {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+.hover-link svg {
+    transition: transform 0.3s ease;
+}
+
+.hover-link:hover svg {
+    transform: scale(1.1);
+}

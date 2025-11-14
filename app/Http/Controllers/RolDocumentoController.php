@@ -9,6 +9,7 @@ use App\Http\Requests\StoreRolDocumentoRequest;
 use App\Http\Requests\UpdateRolDocumentoRequest;
 use Dotenv\Exception\ValidationException;
 use App\Http\Controllers\DocumentoController;
+use App\Models\TipoDocumento;
 
 class RolDocumentoController extends Controller
 {
@@ -17,11 +18,31 @@ class RolDocumentoController extends Controller
      */
     public function index()
     {
-        $lista_documentos = Documento::all();
-        $roles = Rol::all();
-        $accesos = RolDocumento::all();
-        $lista_Datos = [$lista_documentos, $roles, $accesos];
-        return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
+        $idProceso = session()->get('idProceso', 0);
+
+        if ($idProceso > 0) {
+            $lista_documentos = Documento::with('tipoDocumento')
+                ->where('idProceso', $idProceso)
+                ->get();
+                
+            $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
+
+
+            $tp = TipoDocumento::All();
+
+            foreach ($documentosAgrupados as $idTipoDocumento => $docs) {
+                $documentosAgrupados[$tp->find($idTipoDocumento)->nombreDocumento] = $docs;
+                unset($documentosAgrupados[$idTipoDocumento]);
+            }
+
+
+            $roles = Rol::all();
+            $accesos = RolDocumento::all();
+            $lista_Datos = [$documentosAgrupados, $roles, $accesos];
+            return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
+        } else {
+            return view('masterpages.dashboard');
+        }
     }
 
 

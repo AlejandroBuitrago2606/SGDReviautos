@@ -239,12 +239,51 @@
         @endforeach
 
 
+        <div class="table-header mt-3">
+            <button class="btn-add" style="width: fit-content; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#agregarCategoria">
+                <span style="font-size: 20px; font-weight: bold;">+</span>
+                AGREGAR CATEGORIA
+            </button>
+        </div>
 
 
+        <form action="/agregarCategoria" method="POST">
+
+            @csrf
+
+            <div class="modal fade modal-lg" id="agregarCategoria" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="agregarCategoriaLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-4" id="agregarCategoriaLabel">Agregar nueva categoria</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="nombreCategoria" class="form-label">Nombre de la categoria</label>
+                            <input type="text" class="form-control" id="nombreCategoria" name="nombreCategoria" required maxlength="20">
+                            <br>
+                            <label for="prefijoCategoria" class="form-label">Identificacion de la categoria</label>
+                            <input type="text" class="form-control" id="prefijoCategoria" name="prefijoCategoria" placeholder="Prefijo" required maxlength="3">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary fz-4" data-bs-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-success fz-4">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if(isset($categoria))
+            <script>
+                setTimeout(() => {
+                    const msgTD = @json($categoria);
+                    alert(msgTD);
+                }, 0.05);
+            </script>
+            @endif
 
 
-
-
+        </form>
 
 
 

@@ -6,7 +6,7 @@ use App\Models\Proceso;
 use App\Models\TipoDocumento;
 use App\Http\Requests\StoreProcesoRequest;
 use App\Http\Requests\UpdateProcesoRequest;
-use PhpParser\Node\Expr\Array_;
+use Dotenv\Exception\ValidationException;
 
 class ProcesoController extends Controller
 {
@@ -15,8 +15,7 @@ class ProcesoController extends Controller
      */
     public function index()
     {
-        $procesos = Proceso::All();
-        return response()->json(["procesos" => $procesos]);
+        return view('masterpages.dashboard');
     }
 
     /**
@@ -32,7 +31,20 @@ class ProcesoController extends Controller
      */
     public function store(StoreProcesoRequest $request)
     {
-        //
+        try {
+            $datos = $request->validated();
+            Proceso::create([
+                "nombreProceso" => $datos["nombreProceso"],
+                "prefijo" => $datos["prefijoProceso"]
+            ]);
+
+            return $this->index()->with('procesoMensaje', 'Categoria proceso creada correctamente');
+
+        } catch (ValidationException $e) {
+            
+            return $this->index()->with('procesoMensaje', 'Ocurrió un error al crear la categoria: ' . $e->getMessage());
+        }
+
     }
 
     /**

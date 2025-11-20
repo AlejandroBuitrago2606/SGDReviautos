@@ -7,9 +7,11 @@
     <title>CDA Sistema</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/styleDashboard.css') }}">
+    <script src="{{ asset('/js/dashboard.js') }}"></script>
 </head>
 
 <body>
+
 
 
 
@@ -68,16 +70,18 @@
 
 
 
-        <button class="btn-add" type="button">
+        <button class="btn-add" type="button" data-bs-toggle="modal" data-bs-target="#agregarProceso">
             <span style="font-size: 20px; font-weight: bold;">+</span>
             Agregar
         </button>
+
+
 
     </div>
 
 
 
-    
+
 
     <!-- Contenido Principal -->
     <div class="main-content">
@@ -98,6 +102,44 @@
         });
     </script>
 
+
+    <form action="/agregarProceso" method="POST">
+
+        @csrf
+
+        <div class="modal fade modal-lg" id="agregarProceso" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="agregarProcesoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4" id="agregarProcesoLabel">Agregar nuevo proceso</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="nombreProceso" class="form-label">Nombre del proceso</label>
+                        <input type="text" class="form-control" id="nombreProceso" name="nombreProceso" required maxlength="80">
+                        <br>
+                        <label for="prefijoProceso" class="form-label">Identificacion del proceso</label>
+                        <input type="text" class="form-control" id="prefijoProceso" name="prefijoProceso" placeholder="Prefijo" required maxlength="3">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary fz-4" data-bs-dismiss="modal">Cerrar</button>
+                        <button class="btn btn-success fz-4">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if(isset($procesoMensaje))
+        <script>
+            setTimeout(() => {
+                const msg = @json($procesoMensaje);
+                alert(msg);
+            }, 0.05);
+        </script>
+        @endif
+
+
+    </form>
 
     <footer class="bg-dark text-light py-5 mt-5" role="contentinfo" aria-label="Pie de página">
         <div class="container">

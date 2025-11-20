@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RolDocumentoController;
+use App\Http\Controllers\TipoDocumentoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +28,11 @@ Route::get('/traerDocumentos/{id}', [DocumentoController::class, 'select']);
 
 Route::get('/acceso/{id}', [RolDocumentoController::class, 'acceso']);
 Route::post('/acceso', [RolDocumentoController::class, 'store']);
+
+
+Route::post('/agregarCategoria', [TipoDocumentoController::class, 'store']);
+
+Route::post('/agregarProceso', [ProcesoController::class, 'store']);
 
 
 Route::post('/login', [UsuarioController::class, 'login']);

@@ -11,7 +11,7 @@ class StoreProcesoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreProcesoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombreProceso'     => 'required|string|max:80',
+            'prefijoProceso'    => 'required|string|max:3'
         ];
     }
 }

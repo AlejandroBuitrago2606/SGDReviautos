@@ -11,7 +11,7 @@ class StoreTipoDocumentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreTipoDocumentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'nombreCategoria'     => 'required|string|max:20',
+            'prefijoCategoria'    => 'required|string|max:3'
         ];
     }
 }

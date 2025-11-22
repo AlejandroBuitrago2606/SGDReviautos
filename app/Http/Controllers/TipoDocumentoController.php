@@ -6,6 +6,7 @@ use App\Models\TipoDocumento;
 use App\Models\Documento;
 use App\Models\RolDocumento;
 use App\Models\Rol;
+use App\Models\Proceso;
 use App\Http\Requests\StoreTipoDocumentoRequest;
 use App\Http\Requests\UpdateTipoDocumentoRequest;
 use Dotenv\Exception\ValidationException;
@@ -23,23 +24,24 @@ class TipoDocumentoController extends Controller
             $lista_documentos = Documento::with('tipoDocumento')
                 ->where('idProceso', $idProceso)
                 ->get();
-
+                
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
 
-            $tp = TipoDocumento::All();
+            $TiposDoc = TipoDocumento::All();
 
             foreach ($documentosAgrupados as $idTipoDocumento => $docs) {
-                $documentosAgrupados[$tp->find($idTipoDocumento)->nombreDocumento] = $docs;
+                $documentosAgrupados[$TiposDoc->find($idTipoDocumento)->nombreDocumento] = $docs;
                 unset($documentosAgrupados[$idTipoDocumento]);
             }
 
-
+            $procesos = Proceso::all();
             $roles = Rol::all();
             $accesos = RolDocumento::all();
-            $lista_Datos = [$documentosAgrupados, $roles, $accesos];
+            $lista_Datos = [$documentosAgrupados, $roles, $accesos, $procesos, $TiposDoc];
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
         } else {
+
             return view('masterpages.dashboard');
         }
 
@@ -60,17 +62,18 @@ class TipoDocumentoController extends Controller
     public function store(StoreTipoDocumentoRequest $request)
     {
         try {
+
             $datos = $request->validated();
             TipoDocumento::create([
                 "nombreDocumento" => $datos["nombreCategoria"],
                 "prefijo" => $datos["prefijoCategoria"]
             ]);
 
-            return $this->index()->with('categoria', 'Categoria creada correctamente');
+            return $this->index()->with('categoriaCreada', 'Categoria creada correctamente');
 
         } catch (ValidationException $e) {
             
-            return $this->index()->with('categoria', 'Ocurrió un error al crear la categoria: ' . $e->getMessage());
+            return $this->index()->with('categoriaCreada', 'Ocurrió un error al crear la categoria: ' . $e->getMessage());
         }
     }
 

@@ -32,17 +32,17 @@ class DocumentoController extends Controller
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
 
-            $tp = TipoDocumento::All();
+            $TiposDoc = TipoDocumento::All();
 
             foreach ($documentosAgrupados as $idTipoDocumento => $docs) {
-                $documentosAgrupados[$tp->find($idTipoDocumento)->nombreDocumento] = $docs;
+                $documentosAgrupados[$TiposDoc->find($idTipoDocumento)->nombreDocumento] = $docs;
                 unset($documentosAgrupados[$idTipoDocumento]);
             }
 
-
+            $procesos = Proceso::all();
             $roles = Rol::all();
             $accesos = RolDocumento::all();
-            $lista_Datos = [$documentosAgrupados, $roles, $accesos];
+            $lista_Datos = [$documentosAgrupados, $roles, $accesos, $procesos, $TiposDoc];
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
         } else {
             return view('masterpages.dashboard');
@@ -240,8 +240,8 @@ class DocumentoController extends Controller
 
     public function select(int $id)
     {
-
         session(['idProceso' => $id]);
         return redirect('/indexDocumentos');
     }
 }
+

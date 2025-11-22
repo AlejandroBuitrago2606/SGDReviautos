@@ -70,9 +70,6 @@ document.querySelectorAll('.btn-acceso').forEach(btn => {
 
 
 
-
-
-
 document.querySelectorAll('.toggle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const targetSelector = btn.getAttribute('data-target');
@@ -93,3 +90,6 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
         }
     });
 });
+
+
+

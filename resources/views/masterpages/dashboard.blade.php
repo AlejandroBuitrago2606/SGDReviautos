@@ -7,7 +7,6 @@
     <title>CDA Sistema</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/styleDashboard.css') }}">
-    <script src="{{ asset('/js/dashboard.js') }}"></script>
 </head>
 
 <body>
@@ -38,46 +37,71 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo-container">
-            <img src="{{ asset('/images/logoReviautos.png') }}" alt="CDA logo" style="width: 290px; height: 80px; ml-5">
+            <img src="{{ asset('/images/logoReviautos.png') }}" alt="CDA logo" style="width: 290px; height: 80px;">
         </div>
 
-        @if (!isset($procesos) )
+        @if (!isset($procesos))
         <script>
             setTimeout(() => {
                 const msg = "No se han cargado los datos";
                 alert(msg);
-
             }, 0.05);
         </script>
-
         @endif
 
 
-
-        @foreach ($procesos as $proceso)
-
-
         <div class="menu-item">
-            <a class="menu-header sin-subrayado" href="{{ url('traerDocumentos/'.$proceso->idProceso) }}">
-
-                <span>{{ $proceso->nombreProceso.' ('.$proceso->prefijo.')'}}</span>
-                <!-- <span class="chevron">∨</span> -->
-
+            <a class="menu-header sin-subrayado" href="{{ url('/dashboard') }}">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
             </a>
         </div>
 
-        @endforeach
+
+        <div class="menu-item active">
+            <div class="menu-header" onclick="toggleSubmenu(this)">
+                <i class="fas fa-cogs"></i>
+                <span>Procesos</span>
+                <span class="chevron">›</span>
+            </div>
+            <div class="submenu">
+                @foreach ($procesos as $proceso)
+                <a class="submenu-item sin-subrayado" href="{{ url('traerDocumentos/'.$proceso->idProceso) }}">
+                    <span>{{ $proceso->nombreProceso.' ('.$proceso->prefijo.')'}}</span>
+                </a>
+                @endforeach
+            </div>
+        </div>
 
 
+        <div class="menu-item">
+            <div class="menu-header" onclick="toggleSubmenu(this)">
+                <i class="fas fa-file-alt"></i>
+                <span>Clasificación</span>
+                <span class="chevron">›</span>
+            </div>
+            <div class="submenu">
+                <a class="submenu-item sin-subrayado" href="{{ url('#') }}">
+                    <span>Gestionar procesos</span>
+                </a>
+                <a class="submenu-item sin-subrayado" href="{{ url('#') }}">
+                    <span>Gestionar tipos de documento</span>
+                </a>
 
+            </div>
+        </div>
+
+
+        <!-- Botón Agregar -->
         <button class="btn-add" type="button" data-bs-toggle="modal" data-bs-target="#agregarProceso">
-            <span style="font-size: 20px; font-weight: bold;">+</span>
-            Agregar
+            <i class="fas fa-plus"></i>
+            <span>Agregar Proceso</span>
         </button>
-
-
-
     </div>
+
+
+
+
 
 
 
@@ -92,15 +116,7 @@
 
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.querySelectorAll('.menu-header').forEach(header => {
-            header.addEventListener('click', function() {
-                const chevron = this.querySelector('.chevron');
-                chevron.classList.toggle('active');
-            });
-        });
-    </script>
+
 
 
     <form action="/agregarProceso" method="POST">
@@ -202,6 +218,8 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 
 </body>
 

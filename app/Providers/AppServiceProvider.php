@@ -24,5 +24,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('masterpages.dashboard', function ($view) {
             $view->with('procesos', Proceso::all());
         });
+
+        
     }
 }

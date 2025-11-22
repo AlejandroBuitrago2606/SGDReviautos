@@ -258,3 +258,105 @@ a.sin-subrayado {
 .hover-link:hover svg {
     transform: scale(1.1);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.menu-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #24272bff;
+    text-decoration: none;
+}
+
+.menu-header:hover {
+    background-color: #334155;
+    color: #ffffffff;
+}
+
+.menu-header i {
+    margin-right: 12px;
+    font-size: 18px;
+    width: 20px;
+}
+
+.menu-header span:first-of-type {
+    flex: 1;
+}
+
+.chevron {
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.menu-item.active .chevron {
+    transform: rotate(90deg);
+}
+
+.submenu {
+    max-height: 0;
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+    background-color: #c2c3c7ff;
+}
+
+.menu-item.active .submenu {
+    max-height: 500px;
+}
+
+.submenu-item {
+    display: block;
+    padding: 10px 20px 10px 52px;
+    color: #24272bff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.submenu-item:hover {
+    background-color: #1e293b;
+    color: #fff;
+    padding-left: 56px;
+}
+
+.sin-subrayado {
+    text-decoration: none !important;
+}
+
+
+.btn-add i {
+    font-size: 18px;
+}
+
+/* Scrollbar personalizado */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}

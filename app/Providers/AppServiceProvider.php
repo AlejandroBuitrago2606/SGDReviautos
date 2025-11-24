@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Proceso;
+use App\Models\TipoDocumento;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,9 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('masterpages.dashboard', function ($view) {
-            $view->with('procesos', Proceso::all());
+            $view->with('lista_procesos', Proceso::all())
+                ->with('lista_categorias', TipoDocumento::all());
         });
-
-        
     }
 }

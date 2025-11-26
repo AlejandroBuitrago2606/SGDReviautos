@@ -11,7 +11,7 @@ class UpdateProcesoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateProcesoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+
+            'idProceso'       => 'required|integer',
+            'nombreProceso' => 'required|string|max:80',
+            'prefijoProceso'     => 'required|string|max:3'
         ];
     }
 }

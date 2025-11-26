@@ -32,10 +32,15 @@ Route::post('/acceso', [RolDocumentoController::class, 'store']);
 
 Route::post('/agregarCategoria', [TipoDocumentoController::class, 'store']);
 
+
+
 Route::post('/agregarProceso', [ProcesoController::class, 'store']);
+Route::patch('/editarProceso', [ProcesoController::class, 'update']);
+Route::delete('/eliminarProceso/{id}', [ProcesoController::class, 'destroy']);
 
 
 Route::post('/login', [UsuarioController::class, 'login']);
+
 
 
 Route::get('/dashboard', [DashboardController::class, 'create']);

@@ -11,7 +11,7 @@ class UpdateTipoDocumentoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateTipoDocumentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'idTipoDocumento'       => 'required|integer',
+            'nombreCategoria' => 'required|string|max:20',
+            'prefijoCategoria'     => 'required|string|max:3'
         ];
     }
 }

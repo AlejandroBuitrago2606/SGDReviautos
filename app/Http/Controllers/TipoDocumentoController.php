@@ -10,6 +10,7 @@ use App\Models\Proceso;
 use App\Http\Requests\StoreTipoDocumentoRequest;
 use App\Http\Requests\UpdateTipoDocumentoRequest;
 use Dotenv\Exception\ValidationException;
+use Illuminate\Database\QueryException;
 
 class TipoDocumentoController extends Controller
 {
@@ -24,7 +25,7 @@ class TipoDocumentoController extends Controller
             $lista_documentos = Documento::with('tipoDocumento')
                 ->where('idProceso', $idProceso)
                 ->get();
-                
+
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
 
@@ -44,8 +45,6 @@ class TipoDocumentoController extends Controller
 
             return view('masterpages.dashboard');
         }
-
-
     }
 
     /**
@@ -70,9 +69,8 @@ class TipoDocumentoController extends Controller
             ]);
 
             return $this->index()->with('categoriaCreada', 'Categoria creada correctamente');
-
         } catch (ValidationException $e) {
-            
+
             return $this->index()->with('categoriaCreada', 'Ocurrió un error al crear la categoria: ' . $e->getMessage());
         }
     }
@@ -96,16 +94,45 @@ class TipoDocumentoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTipoDocumentoRequest $request, TipoDocumento $tipoDocumento)
+    public function update(UpdateTipoDocumentoRequest $request)
     {
-        //
+
+        try {
+            $datos = $request->validated();
+
+            $tipoDocumento = TipoDocumento::where('idTipoDocumento', $datos['idTipoDocumento'])->first();
+
+            if (!$tipoDocumento) {
+                throw new ValidationException("La categoria con ID " . $datos['idTipoDocumento'] . " no existe.");
+            }
+
+            $tipoDocumento->nombreDocumento = $datos['nombreDocumento'];
+            $tipoDocumento->prefijo = $datos['prefijo'];
+            $tipoDocumento->save();
+
+            return redirect()->route('/dashboard')->with('categoriaEditada', 'Categoria actualizada correctamente');
+        } catch (ValidationException $e) {
+            return redirect()->route('/dashboard')->with('categoriaEditada', 'Ocurrió un error al actualizar la categoria: ' . $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TipoDocumento $tipoDocumento)
+    public function destroy(int $id)
     {
-        //
+        try {
+            $tipoDocumento = TipoDocumento::where('idTipoDocumento', $id)->first();
+
+            $tipoDocumento->delete();
+
+            return $this->index()->with('documentoEliminado', 'Categoria eliminada correctamente');
+        } catch (QueryException $e) {
+
+            if ($e->getCode() === '23000') {
+                return $this->index()->with('documentoEliminado', 'Ocurrió un error al eliminar la categoria: ' . 'Existen documentos asociados a esta.');
+            }
+            return $this->index()->with('documentoEliminado', 'Ocurrió un error al eliminar la categoria: ' . $e->getMessage());
+        }
     }
 }

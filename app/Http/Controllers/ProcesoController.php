@@ -7,6 +7,7 @@ use App\Models\TipoDocumento;
 use App\Http\Requests\StoreProcesoRequest;
 use App\Http\Requests\UpdateProcesoRequest;
 use Dotenv\Exception\ValidationException;
+use Illuminate\Database\QueryException;
 
 class ProcesoController extends Controller
 {
@@ -38,7 +39,7 @@ class ProcesoController extends Controller
                 "prefijo" => $datos["prefijoProceso"]
             ]);
 
-            return $this->index()->with('procesoMensaje', 'Categoria proceso creada correctamente');
+            return $this->index()->with('procesoMensaje', 'Proceso creado correctamente');
 
         } catch (ValidationException $e) {
             
@@ -66,17 +67,49 @@ class ProcesoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProcesoRequest $request, Proceso $proceso)
+    public function update(UpdateProcesoRequest $request)
     {
-        //
+        try {
+            $datos = $request->validated();
+
+            $proceso = Proceso::where('idProceso', $datos['idProceso'])->first();
+
+            if (!$proceso) {
+                throw new ValidationException("El proceso con ID " . $datos['idProceso'] . " no existe.");
+            }
+
+            $proceso->nombreProceso = $datos['nombreProceso'];
+            $proceso->prefijo = $datos['prefijoProceso'];
+            $proceso->save();
+
+            return $this->index()->with('procesoMensaje', 'Proceso actualizado correctamente');
+
+        } catch (ValidationException $e) {
+            return $this->index()->with('procesoMensaje', 'Ocurrió un error al actualizar la categoria: ' . $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proceso $proceso)
-    {
-        //
+    public function destroy(int $id)
+    {  
+        try {
+            $proceso = Proceso::where('idProceso', $id)->first();
+
+            $proceso->delete();
+
+            return $this->index()->with('procesoEliminado', 'Proceso eliminado correctamente');
+
+        } catch (QueryException $e) {
+            
+            if ($e->getCode() === '23000') {
+                return $this->index()->with('procesoEliminado', 'Ocurrió un error al eliminar el proceso: ' . 'Existen documentos y categorias asociados a este.');
+                
+            }
+            return $this->index()->with('procesoEliminado', 'Ocurrió un error al eliminar el proceso: ' . $e->getMessage());
+        }
+        
     }
 
 

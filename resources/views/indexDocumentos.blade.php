@@ -275,8 +275,8 @@
 
                                 <div class="col-md-6">
                                     <div class="detail-item">
-                                        <small class="text-muted d-block mb-1">Numerales</small>
-                                        <p class="mb-0">{{ $doc->numeral }}</p>
+                                        <small class="text-muted d-block mb-1">Responsable</small>
+                                        <p class="mb-0">{{ $doc->responsable }}</p>
                                     </div>
                                 </div>
 

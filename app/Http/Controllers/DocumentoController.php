@@ -243,5 +243,18 @@ class DocumentoController extends Controller
         session(['idProceso' => $id]);
         return redirect('/indexDocumentos');
     }
+
+    public function download(string $ruta)
+    {
+        try {
+            if (Storage::disk('public/')->exists($ruta)) {
+                return Storage::download($ruta);
+            } else {
+                return redirect('/indexDocumentos')->with('errorDescarga', 'El archivo no existe.');
+            }
+        } catch (Exception $e) {
+            return redirect('/indexDocumentos')->with('errorDescarga', 'Error al descargar el archivo: ' . $e->getMessage());
+        }
+    }
 }
 

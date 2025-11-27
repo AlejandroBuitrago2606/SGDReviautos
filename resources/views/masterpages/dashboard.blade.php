@@ -52,7 +52,9 @@
 
         <div class="menu-item">
             <a class="menu-header sin-subrayado" href="{{ url('/dashboard') }}">
-                <i class="fas fa-home"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icons_dashboard" width="30" height="30" viewBox="0 0 24 24">
+                    <path fill="#1c1d27ff" d="M4 19v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-3q-.425 0-.712-.288T14 20v-5q0-.425-.288-.712T13 14h-2q-.425 0-.712.288T10 15v5q0 .425-.288.713T9 21H6q-.825 0-1.412-.587T4 19" />
+                </svg>
                 <span>Inicio</span>
             </a>
         </div>
@@ -60,25 +62,42 @@
 
         <div class="menu-item active">
             <div class="menu-header" onclick="toggleSubmenu(this)">
-                <i class="fas fa-cogs"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icons_dashboard" width="30" height="30" viewBox="0 0 2048 2048">
+                    <path fill="#1c1d27ff" d="M837 844q-23 37-53 67t-68 54l51 124l-118 48l-51-123q-40 10-86 10t-86-10l-51 123l-118-48l51-124q-37-23-67-53t-54-68L63 895L15 777l123-51q-10-40-10-86t10-86L15 503l48-118l124 51q46-75 121-121l-51-124l118-48l51 123q40-10 86-10t86 10l51-123l118 48l-51 124q75 46 121 121l124-51l48 118l-123 51q10 40 10 86t-10 86l123 51l-48 118zm-325 52q53 0 99-20t82-55t55-81t20-100q0-53-20-99t-55-82t-81-55t-100-20q-53 0-99 20t-82 55t-55 81t-20 100q0 53 20 99t55 82t81 55t100 20m1408 448q0 55-14 111l137 56l-48 119l-138-57q-59 98-156 156l57 137l-119 49l-56-137q-56 14-111 14t-111-14l-56 137l-119-49l57-137q-98-58-156-156l-138 57l-48-119l137-56q-14-56-14-111t14-111l-137-56l48-119l138 57q58-97 156-156l-57-138l119-48l56 137q56-14 111-14t111 14l56-137l119 48l-57 138q97 59 156 156l138-57l48 119l-137 56q14 56 14 111m-448 320q66 0 124-25t101-68t69-102t26-125t-25-124t-69-101t-102-69t-124-26t-124 25t-102 69t-69 102t-25 124t25 124t68 102t102 69t125 25" />
+                </svg>
                 <span>Procesos</span>
-                <span class="chevron">›</span>
+                <span class="chevron_1">˅</span>
             </div>
             <div class="submenu">
                 @foreach ($lista_procesos as $proceso)
                 <a class="submenu-item sin-subrayado" href="{{ url('traerDocumentos/'.$proceso->idProceso) }}">
                     <span>{{ $proceso->nombreProceso}}</span><span style="text-transform: uppercase;">{{' ('.$proceso->prefijo.')'}}</span>
                 </a>
+
                 @endforeach
+
+
+
+                <a class="submenu-item-add sin-subrayado" data-bs-toggle="modal" data-bs-target="#agregarProceso">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 14 14">
+                        <path fill="#fff" fill-rule="evenodd" d="M.375 12c0 .898.728 1.625 1.625 1.625h7.5c.898 0 1.625-.727 1.625-1.625v-.875H12c.898 0 1.625-.727 1.625-1.625V2c0-.897-.727-1.625-1.625-1.625H4.5c-.897 0-1.625.728-1.625 1.625v.875H2c-.897 0-1.625.728-1.625 1.625zM2 12.375A.375.375 0 0 1 1.625 12V4.5c0-.207.168-.375.375-.375h7.5c.207 0 .375.168.375.375V12a.375.375 0 0 1-.375.375zm.75-4.125a.75.75 0 0 1 .75-.75H5V6a.75.75 0 0 1 1.5 0v1.5H8A.75.75 0 0 1 8 9H6.5v1.5a.75.75 0 0 1-1.5 0V9H3.5a.75.75 0 0 1-.75-.75" clip-rule="evenodd" />
+                    </svg>
+                    <span>Agregar Proceso</span>
+                </a>
             </div>
         </div>
 
 
         <div class="menu-item">
             <div class="menu-header" onclick="toggleSubmenu(this)">
-                <i class="fas fa-file-alt"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                    <g fill="none" stroke="#1c1d27ff" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 19.5h-1c-2.828 0-4.243 0-5.121-.879C7 17.743 7 16.328 7 13.5v-2M7 8v3.5m0 0h7" />
+                        <path d="M14 11.5c0-1.178 0-1.768.351-2.134C14.704 9 15.27 9 16.4 9h1.2c1.131 0 1.697 0 2.048.366c.352.366.352.956.352 2.134s0 1.768-.352 2.134c-.35.366-.917.366-2.048.366h-1.2c-1.131 0-1.697 0-2.048-.366C14 13.268 14 12.678 14 11.5Zm0 8c0-1.178 0-1.768.351-2.134C14.704 17 15.27 17 16.4 17h1.2c1.131 0 1.697 0 2.048.366c.352.366.352.956.352 2.134s0 1.768-.352 2.134c-.35.366-.917.366-2.048.366h-1.2c-1.131 0-1.697 0-2.048-.366C14 21.268 14 20.678 14 19.5ZM5.286 2h3.428C10.79 2 11 3.11 11 5s-.211 3-2.286 3H5.286C3.21 8 3 6.89 3 5s.211-3 2.286-3Z" />
+                    </g>
+                </svg>
                 <span>Clasificación</span>
-                <span class="chevron">›</span>
+                <span class="chevron_2">˅</span>
             </div>
             <div class="submenu">
                 <a class="submenu-item sin-subrayado" data-bs-toggle="modal" data-bs-target="#gestionarProceso" href="{{ url('#') }}">
@@ -92,11 +111,7 @@
         </div>
 
 
-        <!-- Botón Agregar -->
-        <button class="btn-add" type="button" data-bs-toggle="modal" data-bs-target="#agregarProceso">
-            <i class="fas fa-plus"></i>
-            <span>Agregar Proceso</span>
-        </button>
+
 
 
     </div>

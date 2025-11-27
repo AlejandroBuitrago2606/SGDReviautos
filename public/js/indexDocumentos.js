@@ -1,11 +1,3 @@
-// Event listeners para los botones
-
-
-document.querySelectorAll('.btn-download').forEach(btn => {
-    btn.addEventListener('click', function () {
-        alert('Descargando documento...');
-    });
-});
 
 document.querySelectorAll('.btn-view').forEach(btn => {
     btn.addEventListener('click', function () {

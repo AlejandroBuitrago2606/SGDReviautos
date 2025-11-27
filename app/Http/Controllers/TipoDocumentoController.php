@@ -106,13 +106,13 @@ class TipoDocumentoController extends Controller
                 throw new ValidationException("La categoria con ID " . $datos['idTipoDocumento'] . " no existe.");
             }
 
-            $tipoDocumento->nombreDocumento = $datos['nombreDocumento'];
-            $tipoDocumento->prefijo = $datos['prefijo'];
+            $tipoDocumento->nombreDocumento = $datos['nombreCategoria'];
+            $tipoDocumento->prefijo = $datos['prefijoCategoria'];
             $tipoDocumento->save();
 
-            return redirect()->route('/dashboard')->with('categoriaEditada', 'Categoria actualizada correctamente');
+            return view('masterpages.dashboard')->with('categoriaEditada', 'Categoria actualizada correctamente');
         } catch (ValidationException $e) {
-            return redirect()->route('/dashboard')->with('categoriaEditada', 'Ocurrió un error al actualizar la categoria: ' . $e->getMessage());
+            return view('masterpages.dashboard')->with('categoriaEditada', 'Ocurrió un error al actualizar la categoria: ' . $e->getMessage());
         }
     }
 
@@ -126,13 +126,14 @@ class TipoDocumentoController extends Controller
 
             $tipoDocumento->delete();
 
-            return $this->index()->with('documentoEliminado', 'Categoria eliminada correctamente');
+            //return $this->index()->with('categoriaEliminada', 'Categoria eliminada correctamente');
+            return view('masterpages.dashboard')->with('categoriaEliminada', 'Categoria eliminada correctamente');
         } catch (QueryException $e) {
 
             if ($e->getCode() === '23000') {
-                return $this->index()->with('documentoEliminado', 'Ocurrió un error al eliminar la categoria: ' . 'Existen documentos asociados a esta.');
+                 return view('masterpages.dashboard')->with('categoriaEliminada', 'Ocurrió un error al eliminar la categoria: ' . 'Existen documentos asociados a esta.');
             }
-            return $this->index()->with('documentoEliminado', 'Ocurrió un error al eliminar la categoria: ' . $e->getMessage());
+             return view('masterpages.dashboard')->with('categoriaEliminada', 'Ocurrió un error al eliminar la categoria: ' . $e->getMessage());
         }
     }
 }

@@ -40,12 +40,10 @@ class ProcesoController extends Controller
             ]);
 
             return $this->index()->with('procesoMensaje', 'Proceso creado correctamente');
-
         } catch (ValidationException $e) {
-            
+
             return $this->index()->with('procesoMensaje', 'Ocurrió un error al crear la categoria: ' . $e->getMessage());
         }
-
     }
 
     /**
@@ -82,10 +80,9 @@ class ProcesoController extends Controller
             $proceso->prefijo = $datos['prefijoProceso'];
             $proceso->save();
 
-            return $this->index()->with('procesoMensaje', 'Proceso actualizado correctamente');
-
+            return $this->index()->with('procesoEditado', 'Proceso actualizado correctamente');
         } catch (ValidationException $e) {
-            return $this->index()->with('procesoMensaje', 'Ocurrió un error al actualizar la categoria: ' . $e->getMessage());
+            return $this->index()->with('procesoEditado', 'Ocurrió un error al actualizar la categoria: ' . $e->getMessage());
         }
     }
 
@@ -93,25 +90,19 @@ class ProcesoController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(int $id)
-    {  
+    {
         try {
             $proceso = Proceso::where('idProceso', $id)->first();
 
             $proceso->delete();
 
-            return $this->index()->with('procesoEliminado', 'Proceso eliminado correctamente');
-
+            return view('masterpages.dashboard')->with('procesoEliminado', 'Proceso eliminado correctamente');
         } catch (QueryException $e) {
-            
+
             if ($e->getCode() === '23000') {
-                return $this->index()->with('procesoEliminado', 'Ocurrió un error al eliminar el proceso: ' . 'Existen documentos y categorias asociados a este.');
-                
+                return view('masterpages.dashboard')->with('procesoEliminado', 'Ocurrió un error al eliminar el proceso: ' . 'Existen documentos y categorias asociados a este.');
             }
-            return $this->index()->with('procesoEliminado', 'Ocurrió un error al eliminar el proceso: ' . $e->getMessage());
+            return view('masterpages.dashboard')->with('procesoEliminado', 'Ocurrió un error al eliminar el proceso: ' . $e->getMessage());
         }
-        
     }
-
-
-  
 }

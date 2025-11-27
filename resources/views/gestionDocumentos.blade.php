@@ -108,7 +108,7 @@
                                         const msg = @json($procesoEliminado);
                                         alert(msg);
                                     }, 0.05);
-                                    window.location.href = "{{ url('/dashboard') }}";
+                                    window.location.href = "/dashboard";
                                 </script>
                                 @endif
 
@@ -158,9 +158,10 @@
 
                         <br>
 
-                        <form action="" method="POST" style="flex: 1; min-width: 0;">
+                        <form action="/editarCategoria" method="POST" style="flex: 1; min-width: 0;">
                             @csrf
                             @method('PATCH')
+
                             <div class="row" style="display: flex; align-items: center; justify-content: space-between;">
 
                                 <div class="col-10">
@@ -196,10 +197,10 @@
                             </div>
 
 
-                            @if(isset($procesoEditado))
+                            @if(isset($categoriaEditada))
                             <script>
                                 setTimeout(() => {
-                                    const msg = @json($procesoEditado);
+                                    const msg = @json($categoriaEditada);
                                     alert(msg);
                                 }, 0.05);
                                 window.location.href = "/dashboard";
@@ -218,15 +219,32 @@
                                 <div class="label" style="white-space: nowrap;">Editar</div>
                             </div>
 
+                            <form action="/eliminarCategoria/{{ $categoria->idTipoDocumento }}" method="POST">
 
-                            <div class="action-buttons" id="btnDeleteCategory{{ $categoria->idTipoDocumento }}" style="margin: 0; align-items: center;">
-                                <button class="action-btn btn-delete" onclick="return confirm('¿Está seguro de que desea eliminar esta categoria?');" title="Eliminar" style="margin-bottom: 5px;">
-                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                                    </svg>
-                                </button>
-                                <div class="label" style="white-space: nowrap;">Eliminar</div>
-                            </div>
+                                @csrf
+                                @method('DELETE')
+
+
+                                <div class="action-buttons" id="btnDeleteCategory{{ $categoria->idTipoDocumento }}" style="margin: 0; align-items: center;">
+                                    <button class="action-btn btn-delete" onclick="return confirm('¿Está seguro de que desea eliminar esta categoria?');" title="Eliminar" style="margin-bottom: 5px;">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                                        </svg>
+                                    </button>
+                                    <div class="label" style="white-space: nowrap;">Eliminar</div>
+                                </div>
+
+                                @if(isset($categoriaEliminada))
+                                <script>
+                                    setTimeout(() => {
+                                        const msg = @json($categoriaEliminada);
+                                        alert(msg);
+                                    }, 0.05);
+                                    window.location.href = "{{ url('/dashboard') }}";
+                                </script>
+                                @endif
+
+                            </form>
                         </div>
 
                     </div>

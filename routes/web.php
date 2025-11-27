@@ -24,6 +24,7 @@ Route::get('/editarDocumento/{id}', [DocumentoController::class, 'edit']);
 Route::patch('/editarDocumento/{id}/edit', [DocumentoController::class, 'update']);
 Route::delete('/eliminarDocumento/{id}', [DocumentoController::class, 'destroy']);
 Route::get('/traerDocumentos/{id}', [DocumentoController::class, 'select']);
+Route::get('/descargarDocumento/{ruta}', [DocumentoController::class, 'download']);
 
 
 Route::get('/acceso/{id}', [RolDocumentoController::class, 'acceso']);
@@ -31,7 +32,8 @@ Route::post('/acceso', [RolDocumentoController::class, 'store']);
 
 
 Route::post('/agregarCategoria', [TipoDocumentoController::class, 'store']);
-
+Route::patch('/editarCategoria', [TipoDocumentoController::class, 'update']);
+Route::delete('/eliminarCategoria/{id}', [TipoDocumentoController::class, 'destroy']);
 
 
 Route::post('/agregarProceso', [ProcesoController::class, 'store']);

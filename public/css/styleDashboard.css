@@ -131,13 +131,23 @@ body {
     background: #f8f9fa;
 }
 
-.chevron {
+.chevron_1 {
     transition: transform 0.3s ease;
     color: #666;
     font-size: 18px;
 }
 
-.chevron.active {
+.chevron_1.active {
+    transform: rotate(180deg);
+}
+
+.chevron_2 {
+    transition: transform 0.3s ease;
+    color: #666;
+    font-size: 18px;
+}
+
+.chevron_2.active {
     transform: rotate(180deg);
 }
 
@@ -286,6 +296,7 @@ a.sin-subrayado {
 .menu-header:hover {
     background-color: #334155;
     color: #ffffffff;
+    fill: #ffffffff;
 }
 
 .menu-header i {
@@ -334,6 +345,18 @@ a.sin-subrayado {
     padding-left: 56px;
 }
 
+.submenu-item-add {
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    padding: 10px 20px 10px 52px;
+    background-color: #1e293b;
+    color: #fff;
+    padding-left: 56px;
+}
+
+
 .sin-subrayado {
     text-decoration: none !important;
 }
@@ -365,7 +388,7 @@ a.sin-subrayado {
 
 
 .action-buttons {
-    
+
     gap: 15px;
     justify-content: center;
     display: inline-flex;
@@ -458,4 +481,13 @@ a.sin-subrayado {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+.icons_dashboard {
+    margin-right: 4px;
+}
+
+.icons_dashboard:hover {
+    fill: white;
 }

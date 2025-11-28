@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CDA Sistema</title>
+    <title>SG Reviautos</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/styleDashboard.css') }}">
+    
+    <link rel="icon" href="{{ asset('/images/logoReviautos_sol_1.png') }}" type="image/x-icon" />
 </head>
 
 <body>
@@ -14,7 +16,6 @@
 
 
 
-    <!-- Top Header -->
     <div class="top-header">
         <div class="user-info">
             <div>
@@ -37,7 +38,9 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo-container">
-            <img src="{{ asset('/images/logoReviautos.png') }}" alt="CDA logo" style="width: 290px; height: 80px;">
+            <a href="{{ url('/dashboard') }}">
+                <img src="{{ asset('/images/logoReviautos.png') }}" alt="CDA logo" style="width: 290px; height: 80px;">
+            </a>
         </div>
 
         @if (!isset($lista_procesos))
@@ -178,7 +181,11 @@
     @include('gestionDocumentos')
 
 
-    <footer class="bg-dark text-light py-5 mt-5" role="contentinfo" aria-label="Pie de página">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
+
+    <footer style="zoom: 80%;" class="bg-dark text-light py-5 mt-5" role="contentinfo" aria-label="Pie de página">
         <div class="container">
             <div class="row align-items-center">
                 <!-- Información de la empresa -->
@@ -238,9 +245,6 @@
             </div>
         </div>
     </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
 
 </body>
 

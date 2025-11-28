@@ -15,6 +15,8 @@ use App\Models\Usuario;
 use Dotenv\Exception\ValidationException;
 use Exception;
 
+use Illuminate\Http\Request;
+
 class DocumentoController extends Controller
 {
     /**
@@ -28,7 +30,7 @@ class DocumentoController extends Controller
             $lista_documentos = Documento::with('tipoDocumento')
                 ->where('idProceso', $idProceso)
                 ->get();
-                
+
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
 
@@ -194,6 +196,9 @@ class DocumentoController extends Controller
         try {
 
             $documento = Documento::where('idDocumento', $idDocumento)->first();
+
+            $this->eliminarAccesos($idDocumento);
+
             //eliminamos primero el archivo fisico
             if (Storage::disk('public')->exists($documento->rutaArchivo)) {
                 Storage::disk('public')->delete($documento->rutaArchivo);
@@ -204,6 +209,17 @@ class DocumentoController extends Controller
         } catch (Exception $e) {
 
             return $this->index()->with('documentoEliminado', 'Error al eliminar el documento: ' . $e->getMessage());
+        }
+    }
+
+    private function eliminarAccesos(int $idDocumento)
+    {
+        $accesos = RolDocumento::where('idDocumento', $idDocumento)->get();
+
+        if (isset($accesos)) {
+            foreach ($accesos as $acceso) {
+                $acceso->delete();
+            }
         }
     }
 
@@ -244,17 +260,21 @@ class DocumentoController extends Controller
         return redirect('/indexDocumentos');
     }
 
-    public function download(string $ruta)
+    public function download(Request $request)
     {
+        $ruta = $request->input('rutaArchivo', '');
+
+        // Verificar si el archivo existe y descargarlo
+
         try {
-            if (Storage::disk('public/')->exists($ruta)) {
-                return Storage::download($ruta);
+            if (Storage::disk('public')->exists($ruta)) {
+                $fullPath = Storage::disk('public')->path($ruta);
+                return response()->download($fullPath);
             } else {
-                return redirect('/indexDocumentos')->with('errorDescarga', 'El archivo no existe.');
+                return $this->index()->with('errorDescarga', 'El archivo no existe.');
             }
         } catch (Exception $e) {
-            return redirect('/indexDocumentos')->with('errorDescarga', 'Error al descargar el archivo: ' . $e->getMessage());
+            return $this->index()->with('errorDescarga', 'Error al descargar el archivo: ' . $e->getMessage());
         }
     }
 }
-

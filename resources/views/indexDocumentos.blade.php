@@ -126,11 +126,29 @@
             </div>
 
             <div class="action-buttons">
-                <a class="action-btn btn-download" href="{{ url('/descargarDocumento'.'/'.$doc->rutaArchivo) }}" style="text-decoration: none;" id="btnDescargar" name="btnDescargar" title="Descargar">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                    </svg>
-                </a>
+                <form action="/descargarDocumento" method="post">
+                    @csrf
+
+                    <input type="hidden" name="rutaArchivo" id="rutaArchivo" value="{{ $doc->rutaArchivo }}">
+                    <button class="action-btn btn-download" style="text-decoration: none;" id="btnDescargar" name="btnDescargar" title="Descargar">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                        </svg>
+                    </button>
+
+
+                    @if(isset($errorDescarga))
+                    <script>
+                        setTimeout(() => {
+                            const msg = @json($errorDescarga);
+                            alert(msg);
+                        }, 0.05);
+                        window.location.href = "{{ url('indexDocumentos') }}";
+                    </script>
+                    @endif
+
+
+                </form>
                 <div class="label">Descargar</div>
             </div>
 
@@ -423,9 +441,7 @@
 
 
                             @else
-                            <div class="table-row">
-                                <div class="document-name">No se cargo la informacion correctamente.</div>
-                            </div>
+
                             @endif
 
 

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documento', function (Blueprint $table) {
-            $table->id("idDocumento");
+            $table->id();
             $table->string("consecutivo", 10);
             $table->string("nombre", 200);
             $table->date("fechaCreacion");
@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string("observaciones", 1500)->nullable();
             $table->string("responsable", 50);
             $table->string("rutaArchivo", 200);
-            $table->foreignId("idProceso")->constrained('proceso', 'idProceso')->onUpdate("cascade")->onDelete("cascade");
-            $table->foreignId("idTipoDocumento")->constrained('tipoDocumento', 'idTipoDocumento')->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId("idProceso")->constrained('proceso', 'id')->onUpdate("cascade")->onDelete("cascade");
+            $table->foreignId("idTipoDocumento")->constrained('tipoDocumento', 'id')->onUpdate("cascade")->onDelete("cascade");
             $table->timestamps();
         });
     }

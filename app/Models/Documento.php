@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Documento extends Model
 {
     protected $table = 'documento';
-    protected $primaryKey = 'idDocumento';
 
     use HasFactory;
     protected $fillable = [
-        'idDocumento',
         'consecutivo',
         'nombre',
         'fechaCreacion',
@@ -31,8 +29,5 @@ class Documento extends Model
 
 
 
-    public function tipoDocumento()
-    {
-        return $this->belongsTo(TipoDocumento::class, 'idTipoDocumento');
-    }
+
 }

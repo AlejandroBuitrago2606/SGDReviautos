@@ -8,10 +8,8 @@ use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RolDocumentoController;
 use App\Http\Controllers\TipoDocumentoController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/', [DashboardController::class, 'create']);
 
 Route::get('/login', function () {
     return view('login');
@@ -46,6 +44,7 @@ Route::post('/login', [UsuarioController::class, 'login']);
 
 
 Route::get('/dashboard', [DashboardController::class, 'create']);
+Route::get('/', [DashboardController::class, 'create']);
 
 
 

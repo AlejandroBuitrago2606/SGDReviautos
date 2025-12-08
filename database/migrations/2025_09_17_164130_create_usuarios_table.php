@@ -12,12 +12,12 @@
         public function up(): void
         {
             Schema::create('usuario', callback: function (Blueprint $table) {
-                $table->id("idUsuario");
+                $table->id();
                 $table->string("nombreUsuario", 80);
                 $table->string("telefono", 10);
                 $table->string("correo", 50);
                 $table->string("clave", 150);
-                $table->foreignId('idRol')->constrained('rol','idRol')->onUpdate("cascade")->onDelete("cascade");
+                $table->foreignId('idRol')->constrained('rol','id')->onUpdate("cascade")->onDelete("cascade");
                 $table->timestamps();
             });
         }

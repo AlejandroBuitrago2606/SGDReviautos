@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rol', function (Blueprint $table) {
 
-            $table->id ("idRol");
+            $table->id();
             $table->string("nombreRol", 50);
             
         });

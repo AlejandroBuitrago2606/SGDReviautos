@@ -14,5 +14,9 @@ class TipoDocumento extends Model
         'prefijo'
     ];
 
-    
+
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class, 'idTipoDocumento');
+    }
 }

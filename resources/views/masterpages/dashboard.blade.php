@@ -73,7 +73,7 @@
             </div>
             <div class="submenu">
                 @foreach ($lista_procesos as $proceso)
-                <a class="submenu-item sin-subrayado" href="{{ url('traerDocumentos/'.$proceso->idProceso) }}">
+                <a class="submenu-item sin-subrayado" href="{{ url('traerDocumentos/'.$proceso->id) }}">
                     <span>{{ $proceso->nombreProceso}}</span><span style="text-transform: uppercase;">{{' ('.$proceso->prefijo.')'}}</span>
                 </a>
 

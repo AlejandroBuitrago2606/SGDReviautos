@@ -19,7 +19,7 @@
 
     @foreach ($lista_Datos[3] as $pr)
 
-    @if ($pr->idProceso === $idPr)
+    @if ($pr->id === $idPr)
     <h1 class="page-title">{{ $pr->nombreProceso }}</h1>
     @endif
 
@@ -75,7 +75,7 @@
 
                     @foreach ($lista_Datos[3] as $proceso)
 
-                    @if ($proceso->idProceso === $doc->idProceso )
+                    @if ($proceso->id === $doc->idProceso )
 
                     @php
                     $proceso_name = $proceso->prefijo
@@ -88,7 +88,7 @@
 
                     @foreach ($lista_Datos[4] as $categoria)
 
-                    @if ($categoria->idTipoDocumento === $doc->idTipoDocumento )
+                    @if ($categoria->id === $doc->idTipoDocumento )
 
                     @php
                     $categoria_name = $categoria->prefijo
@@ -117,7 +117,7 @@
 
 
                     <!-- Trigger (puede estar dentro de tu loop) -->
-                    <button class="toggle-btn" data-target="#detalles-{{$doc->idDocumento}}">
+                    <button class="toggle-btn" data-target="#detalles-{{$doc->id}}">
                         Ver detalles <span class="arrow">▼</span>
                     </button>
 
@@ -162,7 +162,7 @@
             </div>
 
             <div class="action-buttons">
-                <a href="editarDocumento/{{ $doc->idDocumento }}" class="action-btn btn-edit" title="Editar">
+                <a href="editarDocumento/{{ $doc->id }}" class="action-btn btn-edit" title="Editar">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
                     </svg>
@@ -174,7 +174,7 @@
                 <a href="javascript:void(0)"
                     class="action-btn btn-acceso"
                     title="Acceso de archivos"
-                    data-doc-id="{{ $doc->idDocumento }}">
+                    data-doc-id="{{ $doc->id }}">
                     <!-- tu svg -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 24 24">
                         <path fill="#fff" d="M20.37 21.25a.75.75 0 0 1-.75.75H4.38a.75.75 0 0 1-.75-.75c0-4.1 4.5-7.28 8.37-7.28s8.37 3.18 8.37 7.28M17.1 7.11A5.1 5.1 0 1 1 12 2a5.11 5.11 0 0 1 5.1 5.11" />
@@ -184,7 +184,7 @@
             </div>
 
             <div class="action-buttons">
-                <form method="POST" action="{{ url('eliminarDocumento/'.$doc->idDocumento) }}">
+                <form method="POST" action="{{ url('eliminarDocumento/'.$doc->id) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="action-btn btn-delete" onclick="return confirm('¿Está seguro de que desea eliminar este documento?');" title="Eliminar">
@@ -213,7 +213,7 @@
 
 
 
-            <div class="toggle-content mt-4" id="detalles-{{$doc->idDocumento}}" style="overflow-y: auto;">
+            <div class="toggle-content mt-4" id="detalles-{{$doc->id}}" style="overflow-y: auto;">
                 <div class="card shadow-sm border-0">
                     <div class="card-body p-4">
                         <div class="row g-3">
@@ -409,9 +409,10 @@
                             @foreach ($lista_Datos[1] as $rol)
 
                             @php
+
                             // Buscar si el rol tiene acceso al documento seleccionado
                             $accesoRol = collect($lista_Datos[2])->first(function ($item) use ($rol, $idDocSeleccionado) {
-                            return $item->idDocumento === $idDocSeleccionado && $item->idRol === $rol->idRol;
+                            return $item->idDocumento === $idDocSeleccionado && $item->idRol === $rol->id;
                             });
                             @endphp
 
@@ -420,24 +421,20 @@
                                     class="form-check-input"
                                     type="checkbox"
                                     name="roles[]"
-                                    value="{{ $rol->idRol }}"
-                                    id="rol{{ $rol->idRol }}"
+                                    value="{{ $rol->id }}"
+                                    id="rol{{ $rol->id }}"
                                     @if ($rol->nombreRol === "COORDINADOR DE SISTEMA DE GESTION")
                                 checked disabled
                                 @elseif ($accesoRol && $accesoRol->acceso === 1)
                                 checked
-                                @endif style="margin-right: 10px;"
-                                >
-                                <h5 class="form-check-label" style="margin-left: 8px;" for="rol{{ $rol->idRol }}">
+                                @endif style="margin-right: 10px;" >
+                                <h5 class="form-check-label" style="margin-left: 8px;" for="rol{{ $rol->id }}">
                                     {{ $rol->nombreRol }}
                                 </h5>
+
+
                             </div>
                             @endforeach
-
-
-
-
-
 
 
                             @else

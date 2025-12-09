@@ -27,7 +27,8 @@ class Documento extends Model
         'idTipoDocumento'
     ];
 
-
-
-
+    public function tipoDocumento()
+    {
+        return $this->belongsTo(TipoDocumento::class, 'idTipoDocumento');
+    }
 }

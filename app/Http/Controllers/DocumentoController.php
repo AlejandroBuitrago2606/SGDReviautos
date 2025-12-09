@@ -28,8 +28,8 @@ class DocumentoController extends Controller
 
         if ($idProceso > 0) {
             $lista_documentos = Documento::with('tipoDocumento')
-                ->where('idProceso', $idProceso)
-                ->get();
+                                         ->where('idProceso', $idProceso)
+                                         ->get();
 
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
@@ -109,7 +109,7 @@ class DocumentoController extends Controller
      */
     public function show(Documento $documento)
     {
-        $datos = Documento::all()->where('idDocumento', $documento->idDocumento)->first();
+        $datos = Documento::all()->where('id', $documento->id)->first();
         return $datos;
     }
 
@@ -122,7 +122,7 @@ class DocumentoController extends Controller
         $procesos = Proceso::all();
         $tp = TipoDocumento::All();
         $roles = Rol::all();
-        $objDoc = Documento::where('idDocumento', $id)->first();
+        $objDoc = Documento::where('id', $id)->first();
         $datos = [$procesos, $tp, $roles, $objDoc];
 
         return view('/editarDocumento', ['datos' => $datos]);
@@ -160,7 +160,7 @@ class DocumentoController extends Controller
 
 
 
-            $documento = Documento::where('idDocumento', $idDocumento)->first();
+            $documento = Documento::where('id', $idDocumento)->first();
 
             $documento->consecutivo = $datos["consecutivo"];
             $documento->nombre = $datos["nombreDocumento"];
@@ -195,7 +195,7 @@ class DocumentoController extends Controller
 
         try {
 
-            $documento = Documento::where('idDocumento', $idDocumento)->first();
+            $documento = Documento::where('id', $idDocumento)->first();
 
             $this->eliminarAccesos($idDocumento);
 

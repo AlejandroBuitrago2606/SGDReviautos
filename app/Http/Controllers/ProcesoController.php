@@ -70,7 +70,7 @@ class ProcesoController extends Controller
         try {
             $datos = $request->validated();
 
-            $proceso = Proceso::where('idProceso', $datos['idProceso'])->first();
+            $proceso = Proceso::where('id', $datos['idProceso'])->first();
 
             if (!$proceso) {
                 throw new ValidationException("El proceso con ID " . $datos['idProceso'] . " no existe.");
@@ -92,7 +92,7 @@ class ProcesoController extends Controller
     public function destroy(int $id)
     {
         try {
-            $proceso = Proceso::where('idProceso', $id)->first();
+            $proceso = Proceso::where('id', $id)->first();
 
             $proceso->delete();
 

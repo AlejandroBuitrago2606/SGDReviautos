@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('idRol');
             $table->unsignedBigInteger('idDocumento');
 
-            $table->foreign('idRol')->references('id')->on('rol')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('idDocumento')->references('id')->on('documento')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('idRol')->references('id')->on('rol')->onUpdate('cascade')->onDelete('cascade');
 
             $table->primary(['idRol', 'idDocumento']); // PK compuesta.
 

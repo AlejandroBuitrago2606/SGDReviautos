@@ -45,7 +45,7 @@
                 </label>
                 <select name="idProceso" class="form-control" id="idProceso" required>
                     @foreach ($datos[0] as $proceso)
-                    <option value="{{ $proceso->idProceso }}">{{ $proceso->nombreProceso.' - ' . $proceso->prefijo}}</option>
+                    <option value="{{ $proceso->id }}">{{ $proceso->nombreProceso.' - ' . $proceso->prefijo}}</option>
                     @endforeach
                 </select>
             </div>
@@ -56,7 +56,7 @@
                 </label>
                 <select name="idTipoDocumento" class="form-control" id="idTipoDocumento" required>
                     @foreach ($datos[1] as $tp)
-                    <option value="{{ $tp->idTipoDocumento }}">{{ $tp->nombreDocumento.' - ' . $tp->prefijo }}</option>
+                    <option value="{{ $tp->id }}">{{ $tp->nombreDocumento.' - ' . $tp->prefijo }}</option>
                     @endforeach
                 </select>
             </div>

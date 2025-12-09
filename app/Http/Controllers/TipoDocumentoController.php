@@ -100,7 +100,7 @@ class TipoDocumentoController extends Controller
         try {
             $datos = $request->validated();
 
-            $tipoDocumento = TipoDocumento::where('idTipoDocumento', $datos['idTipoDocumento'])->first();
+            $tipoDocumento = TipoDocumento::where('id', $datos['idTipoDocumento'])->first();
 
             if (!$tipoDocumento) {
                 throw new ValidationException("La categoria con ID " . $datos['idTipoDocumento'] . " no existe.");
@@ -122,7 +122,7 @@ class TipoDocumentoController extends Controller
     public function destroy(int $id)
     {
         try {
-            $tipoDocumento = TipoDocumento::where('idTipoDocumento', $id)->first();
+            $tipoDocumento = TipoDocumento::where('id', $id)->first();
 
             $tipoDocumento->delete();
 

@@ -73,7 +73,7 @@ class RolDocumentoController extends Controller
             $idDocumento = $datos["idDocumento"];
 
             // Obtener los Roles no seleccionados
-            $todosLosRoles = Rol::pluck('idRol');
+            $todosLosRoles = Rol::pluck('id');
             $rolesNoSeleccionados = $todosLosRoles->diff($rolesSeleccionados);
 
             // Activar acceso para roles seleccionados

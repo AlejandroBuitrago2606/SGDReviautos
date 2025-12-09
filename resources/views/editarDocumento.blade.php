@@ -8,7 +8,7 @@
 
 <h1 class="text-center">Editar Documento</h1>
 
-<form action="/editarDocumento/{{ $datos[3]->idDocumento }}/edit" method="POST" class="p-1" enctype="multipart/form-data">
+<form action="/editarDocumento/{{ $datos[3]->id }}/edit" method="POST" class="p-1" enctype="multipart/form-data">
 
     @csrf
     @method('PATCH')
@@ -50,8 +50,8 @@
 
                 <select name="idProceso" class="form-control" id="idProceso" required>
                     @foreach ($datos[0] as $proceso)
-                    <option value="{{ $proceso->idProceso }}"
-                        @if ($proceso->idProceso === $datos[3]->idProceso) selected @endif>
+                    <option value="{{ $proceso->id }}"
+                        @if ($proceso->id === $datos[3]->idProceso) selected @endif>
                         {{ $proceso->nombreProceso . ' - ' . $proceso->prefijo }}
                     </option>
                     @endforeach
@@ -67,8 +67,8 @@
 
                 <select name="idTipoDocumento" class="form-control" id="idTipoDocumento" required>
                     @foreach ($datos[1] as $tp)
-                    <option value="{{ $tp->idTipoDocumento }}"
-                        @if ($tp->idTipoDocumento === $datos[3]->idTipoDocumento) selected @endif>
+                    <option value="{{ $tp->id }}"
+                        @if ($tp->id === $datos[3]->idTipoDocumento) selected @endif>
                         {{ $tp->nombreDocumento . ' - ' . $tp->prefijo }}
                     </option>
                     @endforeach
@@ -216,7 +216,7 @@
                 <label class="field-label">
                     Numeral
                 </label>
-                <input type="text" id="numeral" class="form-control" name="numeral" placeholder="Ej: 4.1.2" />
+                <input type="text" id="numeral" class="form-control" name="numeral" value="{{ $datos[3]->numeral }}" placeholder="Ej: 4.1.2" />
             </div>
         </div>
 
@@ -228,15 +228,16 @@
 
                 @php
                 // Obtener la ruta completa
-                $ruta = $datos[3]->rutaArchivo; // por ejemplo: "documentos/tmpr-04-v02-procedimiento-inspeccion-tecnico-mecanica-trv-18.docx"
+                $ruta = $datos[3]->rutaArchivo; 
+                
                 // Extraer sólo el nombre del archivo
                 $nombreArchivo = basename($ruta); // “tmpr-04-v02-procedimiento-inspeccion-tecnico-mecanica-trv-18.docx”
                 @endphp
 
                 <div id="preview-file" style="display: flex; align-items: center; gap: 8px;">
-                    {{-- Aquí irá el ícono --}}
+           
                     <span id="icono-archivo">
-                        <!-- Puedes usar FontAwesome o íconos propios -->
+                    
                         @php
                         $ext = strtolower(pathinfo($nombreArchivo, PATHINFO_EXTENSION));
                         @endphp

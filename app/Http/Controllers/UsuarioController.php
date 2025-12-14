@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use App\Models\Rol;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 use Illuminate\Http\Request;
@@ -14,8 +15,10 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::All();
-        return response()->json($usuarios);
+        $usuarios = Usuario::all();
+        $roles = Rol::all();
+
+        return view('/usuarios', ['usuarios' => $usuarios, 'roles' => $roles]);
     
     }
 

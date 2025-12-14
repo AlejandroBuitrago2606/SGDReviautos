@@ -15,6 +15,9 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/usuarios', [UsuarioController::class, 'index']);
+
+
 Route::get('/indexDocumentos', [DocumentoController::class, 'index']);
 Route::get('/agregarDocumento', [DocumentoController::class, 'create']);
 Route::post('/agregarDocumento', [DocumentoController::class, 'store']);

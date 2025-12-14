@@ -7,7 +7,7 @@
     <title>SG Reviautos</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/styleDashboard.css') }}">
-    
+
     <link rel="icon" href="{{ asset('/images/logoReviautos_sol_1.png') }}" type="image/x-icon" />
 </head>
 
@@ -31,6 +31,21 @@
                 <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
 
                 </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="#">Mi perfil</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Configuración</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="#">Cerrar sesión</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -59,6 +74,7 @@
                     <path fill="#1c1d27ff" d="M4 19v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-3q-.425 0-.712-.288T14 20v-5q0-.425-.288-.712T13 14h-2q-.425 0-.712.288T10 15v5q0 .425-.288.713T9 21H6q-.825 0-1.412-.587T4 19" />
                 </svg>
                 <span>Inicio</span>
+                <span class="chevron_2"></span>
             </a>
         </div>
 
@@ -111,6 +127,18 @@
                 </a>
 
             </div>
+        </div>
+
+
+        <div class="menu-item">
+            <a class="menu-header sin-subrayado" href="{{ url('/usuarios') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                    <path fill="#1c1d27ff" d="M20.37 21.25a.75.75 0 0 1-.75.75H4.38a.75.75 0 0 1-.75-.75c0-4.1 4.5-7.28 8.37-7.28s8.37 3.18 8.37 7.28M17.1 7.11A5.1 5.1 0 1 1 12 2a5.11 5.11 0 0 1 5.1 5.11" />
+                </svg>
+                <span>Usuarios</span>
+
+                <span class="chevron_2"></span>
+            </a>
         </div>
 
 

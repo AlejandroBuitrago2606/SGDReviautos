@@ -11,7 +11,7 @@ class UpdateUsuarioRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,12 +22,12 @@ class UpdateUsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "idUsuario" => "required|integer",
-            "nombreUsuario" => "required|string|max:80",
-            "telefono" => "required|string|max:10",
-            "correo" => "required|string|max:50",
-            "clave" => "required|string|max:150",
-            "idRol" => "required|integer"
+            "idUsuarioEdit" => "required|integer",
+            "nombreUsuarioEdit" => "required|string|max:80",
+            "telefonoEdit" => "required|string|max:10",
+            "correoEdit" => "required|string|max:50",
+            "claveEdit" => "required|string|max:150",
+            "idRolEdit" => "required|integer"
         ];
     }
 }

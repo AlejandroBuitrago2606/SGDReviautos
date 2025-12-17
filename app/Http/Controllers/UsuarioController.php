@@ -7,6 +7,7 @@ use App\Models\Rol;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 use Illuminate\Http\Request;
+use League\Config\Exception\ValidationException;
 
 class UsuarioController extends Controller
 {
@@ -19,7 +20,6 @@ class UsuarioController extends Controller
         $roles = Rol::all();
 
         return view('/usuarios', ['usuarios' => $usuarios, 'roles' => $roles]);
-    
     }
 
     /**
@@ -35,7 +35,23 @@ class UsuarioController extends Controller
      */
     public function store(StoreUsuarioRequest $request)
     {
-        //
+        try {
+
+            $datos = $request->validated();
+            $datos['clave'] = password_hash($datos['clave'], PASSWORD_DEFAULT);
+
+            Usuario::create([
+                'nombreUsuario' => $datos['nombreUsuario'],
+                'telefono' => $datos['telefono'],
+                'correo' => $datos['correo'],
+                'clave' => $datos['clave'],
+                'idRol' => $datos['idRol']
+            ]);
+
+            return $this->index()->with('usuarioCreado', 'Usuario creado exitosamente');
+        } catch (ValidationException $e) {
+            return $this->index()->with('usuarioCreado', 'Error al crear el usuario: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -57,14 +73,34 @@ class UsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUsuarioRequest $request, Usuario $usuario)
+    public function update(UpdateUsuarioRequest $request)
     {
-        //
+
+        try {
+            //code...
+
+            $datos = $request->validated();
+            $idUsuario = $datos['idUsuarioEdit'];
+
+            $usuario = Usuario::where('id', $idUsuario)->first();
+            $usuario->nombreUsuario = $datos['nombreUsuarioEdit'];
+            $usuario->telefono = $datos['telefonoEdit'];
+            $usuario->correo = $datos['correoEdit'];
+            $usuario->clave = password_hash($datos['claveEdit'], PASSWORD_DEFAULT);
+            $usuario->idRol = $datos['idRolEdit'];
+            $usuario->save();
+
+            return $this->index()->with('usuarioEditado', 'Usuario editado exitosamente');
+        } catch (ValidationException $e) {
+
+            return $this->index()->with('usuarioEditado', 'Error al editar el usuario: ' . $e->getMessage());
+        
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+
+
     public function destroy(Usuario $usuario)
     {
         //
@@ -87,10 +123,9 @@ class UsuarioController extends Controller
         $usuarioVerificado = $this->verificarUsuario($usuario);
 
         if ($usuarioVerificado) {
-            return view('/login',['usuario' => 'Usuario verificado']);
+            return view('/login', ['usuario' => 'Usuario verificado']);
         } else {
-            return view('/login',['usuario' => 'Credenciales invalidas']);
-            
+            return view('/login', ['usuario' => 'Credenciales invalidas']);
         }
     }
 

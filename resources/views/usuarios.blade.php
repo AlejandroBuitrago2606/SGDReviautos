@@ -4,6 +4,11 @@
 @section('content')
 <div class="container mt-4">
     <h2 class="mb-4">Lista de Usuarios</h2>
+    <br>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Agregar Usuario
+    </button>
+    <br>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -42,43 +47,53 @@
                         Editar
                     </button>
                 </td>
-                <td><button class="btn btn-danger btn-sm" >Eliminar</button></td>
+                <td><button class="btn btn-danger btn-sm">Eliminar</button></td>
             </tr>
 
             {{-- FILA EDICIÓN --}}
             <tr id="filaEditar{{ $usuario->id }}" style="display:none; background:#f9f9f9;">
                 <td colspan="6">
 
-                    <form action="#" method="POST">
+                    <form action="{{ url('/editarUsuario') }}" method="POST">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
 
                         <div class="row align-items-end">
 
+                            <input type="hidden" id="idUsuarioEdit" name="idUsuarioEdit" value="{{ $usuario->id }}" />
+
                             <div class="col-md-3 mb-2">
                                 <label>Nombre</label>
-                                <input type="text" name="nombreUsuario"
+                                <input type="text" id="nombreUsuarioEdit" name="nombreUsuarioEdit"
                                     class="form-control"
-                                    value="{{ $usuario->nombreUsuario }}" required>
+                                    value="{{ $usuario->nombreUsuario }}" required />
                             </div>
 
                             <div class="col-md-2 mb-2">
                                 <label>Teléfono</label>
-                                <input type="number" name="telefono"
+                                <input type="number" id="telefonoEdit" name="telefonoEdit"
                                     class="form-control"
-                                    value="{{ $usuario->telefono }}" required>
+                                    value="{{ $usuario->telefono }}" required />
                             </div>
 
                             <div class="col-md-3 mb-2">
                                 <label>Correo</label>
-                                <input type="email" name="correo"
+                                <input type="email" id="correoEdit" name="correoEdit"
                                     class="form-control"
-                                    value="{{ $usuario->correo }}" required>
+                                    value="{{ $usuario->correo }}" required />
                             </div>
 
                             <div class="col-md-2 mb-2">
+                                <label>Clave</label>
+                                <input type="text" id="claveEdit" name="claveEdit"
+                                    class="form-control"
+                                    required />
+                            </div>
+
+
+                            <div class="col-md-2 mb-2">
                                 <label>Rol</label>
-                                <select name="idRol" class="form-select">
+                                <select id="idRolEdit" name="idRolEdit" class="form-select">
                                     @foreach($roles as $rol)
                                     <option value="{{ $rol->id }}"
                                         {{ $usuario->idRol == $rol->id ? 'selected' : '' }}>
@@ -100,6 +115,18 @@
                             </div>
 
                         </div>
+
+                        @if(isset($usuarioEditado))
+                        <script>
+                            setTimeout(() => {
+                                const msg = @json($usuarioEditado);
+                                alert(msg);
+                            }, 0.05);
+                            window.location.href = "/usuarios";
+                        </script>
+                        @endif
+
+
                     </form>
 
                 </td>
@@ -113,15 +140,73 @@
     </table>
 </div>
 
-<script>
-    function mostrarEditar(id) {
-        document.getElementById('filaVista' + id).style.display = 'none';
-        document.getElementById('filaEditar' + id).style.display = '';
-    }
 
-    function cancelarEditar(id) {
-        document.getElementById('filaVista' + id).style.display = '';
-        document.getElementById('filaEditar' + id).style.display = 'none';
-    }
-</script>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form method="POST" action="{{ url('/agregarUsuario') }}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Usuario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    @csrf
+
+                    <div class="mb-3">
+                        <label for="nombreUsuario" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="col-form-label">Teléfono:</label>
+                        <input type="text" class="form-control" name="telefono" id="telefono" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="correo" class="col-form-label">Correo:</label>
+                        <input type="email" class="form-control" name="correo" id="correo" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="clave" class="col-form-label">Clave:</label>
+                        <input type="text" value="1234" class="form-control disable" name="clave" id="clave" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="rol" class="col-form-label">Rol:</label>
+                        <select class="form-select" name="idRol" id="rol" required>
+                            @foreach($roles as $rol)
+                            <option value="{{ $rol->id }}">{{ $rol->nombreRol }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    @if(isset($usuarioCreado))
+                    <script>
+                        setTimeout(() => {
+                            const msg = @json($usuarioCreado);
+                            alert(msg);
+                        }, 0.05);
+                        window.location.href = "/usuarios";
+                    </script>
+                    @endif
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success">Registrar</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+<script src="{{ asset('/js/usuarios.js') }}"></script>
 @endsection

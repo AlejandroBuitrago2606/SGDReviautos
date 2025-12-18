@@ -94,16 +94,24 @@ class UsuarioController extends Controller
         } catch (ValidationException $e) {
 
             return $this->index()->with('usuarioEditado', 'Error al editar el usuario: ' . $e->getMessage());
-        
         }
     }
 
 
 
 
-    public function destroy(Usuario $usuario)
+    public function destroy(int $id)
     {
-        //
+        try {
+           
+            $usuario = Usuario::where('id', $id)->first();
+            $usuario->delete();
+
+            return $this->index()->with('usuarioEliminado', 'Usuario eliminado exitosamente');
+            
+        } catch (ValidationException $e) {
+            return $this->index()->with('usuarioEliminado', 'Error al eliminar el usuario: ' . $e->getMessage());
+        }
     }
 
     public function login(Request $request)

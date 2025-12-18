@@ -18,6 +18,7 @@ Route::get('/login', function () {
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::post('/agregarUsuario', [UsuarioController::class, 'store']);
 Route::patch('/editarUsuario', [UsuarioController::class, 'update']);
+Route::delete('/eliminarUsuario/{id}', [UsuarioController::class, 'destroy']);
 
 
 Route::get('/indexDocumentos', [DocumentoController::class, 'index']);

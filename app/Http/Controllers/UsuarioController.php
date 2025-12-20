@@ -6,6 +6,7 @@ use App\Models\Usuario;
 use App\Models\Rol;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
 
@@ -43,8 +44,8 @@ class UsuarioController extends Controller
             Usuario::create([
                 'nombreUsuario' => $datos['nombreUsuario'],
                 'telefono' => $datos['telefono'],
-                'correo' => $datos['correo'],
-                'clave' => $datos['clave'],
+                'email' => $datos['correo'],
+                'password' => $datos['clave'],
                 'idRol' => $datos['idRol']
             ]);
 
@@ -85,8 +86,8 @@ class UsuarioController extends Controller
             $usuario = Usuario::where('id', $idUsuario)->first();
             $usuario->nombreUsuario = $datos['nombreUsuarioEdit'];
             $usuario->telefono = $datos['telefonoEdit'];
-            $usuario->correo = $datos['correoEdit'];
-            $usuario->clave = password_hash($datos['claveEdit'], PASSWORD_DEFAULT);
+            $usuario->email = $datos['correoEdit'];
+            $usuario->password = password_hash($datos['claveEdit'], PASSWORD_DEFAULT);
             $usuario->idRol = $datos['idRolEdit'];
             $usuario->save();
 
@@ -103,51 +104,47 @@ class UsuarioController extends Controller
     public function destroy(int $id)
     {
         try {
-           
+
             $usuario = Usuario::where('id', $id)->first();
             $usuario->delete();
 
             return $this->index()->with('usuarioEliminado', 'Usuario eliminado exitosamente');
-            
         } catch (ValidationException $e) {
             return $this->index()->with('usuarioEliminado', 'Error al eliminar el usuario: ' . $e->getMessage());
         }
     }
 
-    public function login(Request $request)
+    public function viewLoginForm()
     {
-        $correo = $request->input('correo');
-        $clave = $request->input('clave');
-
-        if (!isset($correo) || !isset($clave)) {
-            return response()->json(['message' => 'Correo y clave son requeridos'], 400);
-        }
-
-        $usuario = new Usuario();
-        $usuario->correo = $correo;
-        //Encriptar la clave antes de asignarla
-        //$usuario->clave = password_hash($clave, PASSWORD_DEFAULT);.
-        $usuario->clave = $clave;
-        $usuarioVerificado = $this->verificarUsuario($usuario);
-
-        if ($usuarioVerificado) {
-            return view('/login', ['usuario' => 'Usuario verificado']);
-        } else {
-            return view('/login', ['usuario' => 'Credenciales invalidas']);
-        }
+        return view('login');
     }
 
 
-    public function verificarUsuario(Usuario $usuario): Usuario|null
+    public function login(Request $request)
     {
-        $existe = Usuario::where('correo', $usuario->correo)
-            ->where('clave', $usuario->clave)
-            ->first();
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
 
-        if ($existe) {
-            return $usuario;
-        } else {
-            return null;
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
         }
+
+        return back()->withErrors([
+            'email' => 'Las credenciales proporcionadas no son correctas.',
+        ])->onlyInput('email');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

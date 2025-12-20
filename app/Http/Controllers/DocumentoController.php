@@ -47,7 +47,7 @@ class DocumentoController extends Controller
             $lista_Datos = [$documentosAgrupados, $roles, $accesos, $procesos, $TiposDoc];
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
         } else {
-            return view('masterpages.dashboard');
+            return view('home');
         }
     }
 

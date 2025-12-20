@@ -11,34 +11,23 @@
 <body>
 
     <div class="login-page">
-        <div class="form">
+    <div class="form">
+        <form class="login-form" action="{{ url('/login') }}" method="POST">
+            @csrf
 
-            <form class="login-form" action="login" method="POST">
-                @csrf
+            <input type="email" name="email" placeholder="Correo electrónico" required />
+            <input type="password" name="password" placeholder="Contraseña" required />
+            <button>Login</button>
 
-                <input type="email" name="correo" placeholder="Correo electronico" />
-                <input type="password" name="clave" placeholder="Contraseña" />
-                <button>login</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+            @if (session('error'))
+                <div class="alert alert-danger mt-2">
+                    {{ session('error') }}
+                </div>
+            @endif
 
-
-                @if (isset($usuario))
-
-                <script>
-                    setTimeout(() => {
-                        const msg = @json($usuario);
-                        alert(msg);
-
-                    }, 0.05);
-                </script>
-
-
-                @endif
-
-
-            </form>
-        </div>
+        </form>
     </div>
+</div>
 
 
 

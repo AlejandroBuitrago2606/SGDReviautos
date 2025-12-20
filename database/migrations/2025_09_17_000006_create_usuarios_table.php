@@ -15,8 +15,8 @@
                 $table->id();
                 $table->string("nombreUsuario", 80);
                 $table->string("telefono", 10);
-                $table->string("correo", 50);
-                $table->string("clave", 150);
+                $table->string("email", 50);
+                $table->string("password", 150);
                 $table->foreignId('idRol')->constrained('rol','id')->onUpdate("cascade")->onDelete("cascade");
                 $table->timestamps();
             });

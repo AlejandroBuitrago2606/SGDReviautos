@@ -43,7 +43,7 @@ class TipoDocumentoController extends Controller
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
         } else {
 
-            return view('masterpages.dashboard');
+            return view('home');
         }
     }
 

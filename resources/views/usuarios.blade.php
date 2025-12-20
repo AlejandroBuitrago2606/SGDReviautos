@@ -64,7 +64,7 @@
                                 <span class="text-muted">{{ $usuario->telefono }}</span>
                             </td>
                             <td class="py-3 px-4 align-middle">
-                                <span class="text-muted">{{ $usuario->correo }}</span>
+                                <span class="text-muted">{{ $usuario->email }}</span>
                             </td>
                             <td class="py-3 px-4 align-middle">
                                 <span class="badge bg-light text-dark px-3 py-2" style="font-family: monospace; letter-spacing: 2px;">••••••</span>
@@ -154,13 +154,13 @@
                                                         name="correoEdit"
                                                         class="form-control"
                                                         style="border-radius: 8px; border: 1px solid #dee2e6; padding: 10px 14px;"
-                                                        value="{{ $usuario->correo }}"
+                                                        value="{{ $usuario->email }}"
                                                         required />
                                                 </div>
 
                                                 <div class="col-md-3">
                                                     <label class="form-label fw-medium" style="color: #495057; font-size: 14px;">Nueva Contraseña</label>
-                                                    <input type="text"
+                                                    <input type="password"
                                                         id="claveEdit"
                                                         name="claveEdit"
                                                         class="form-control"

@@ -1,26 +1,26 @@
 
 document.querySelectorAll('.menu-header').forEach(header => {
-    header.addEventListener('click', function () {
-        const chevron = this.querySelector('.chevron');
-        chevron.classList.toggle('active');
-    });
+  header.addEventListener('click', function () {
+    const chevron = this.querySelector('.chevron');
+    chevron.classList.toggle('active');
+  });
 });
 
 
 
 function toggleSubmenu(element) {
-    const menuItem = element.parentElement;
-    const wasActive = menuItem.classList.contains('active');
+  const menuItem = element.parentElement;
+  const wasActive = menuItem.classList.contains('active');
 
-    // Cerrar todos los menús
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.classList.remove('active');
-    });
+  // Cerrar todos los menús
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.classList.remove('active');
+  });
 
-    // Abrir el menú clickeado si no estaba activo
-    if (!wasActive) {
-        menuItem.classList.add('active');
-    }
+  // Abrir el menú clickeado si no estaba activo
+  if (!wasActive) {
+    menuItem.classList.add('active');
+  }
 }
 
 
@@ -98,3 +98,19 @@ function mostrarFormCategory(event) {
 }
 
 
+
+
+
+const greetingEl = document.getElementById("greeting");
+const hour = new Date().getHours();
+let saludo = "";
+
+if (hour < 12) {
+  saludo = "Buenos días 😊";
+} else if (hour < 18) {
+  saludo = "Buenas tardes ☀️";
+} else {
+  saludo = "Buenas noches 🌙";
+}
+
+greetingEl.textContent = saludo;

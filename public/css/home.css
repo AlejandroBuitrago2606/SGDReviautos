@@ -1,0 +1,312 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            min-height: 100vh;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Elementos decorativos de fondo */
+        .bg-decoration-1 {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        .bg-decoration-2 {
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        /* Contenedor principal */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Logo y Bienvenida */
+        .welcome-section {
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+       
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            fill: #667eea;
+        }
+
+        .greeting-title {
+            margin: 0 0 1rem 0;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: rgb(0, 0, 0);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .greeting-subtitle {
+            margin: 0;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: rgba(0, 0, 0, 0.9);
+            font-weight: 300;
+        }
+
+        /* Tarjeta Principal */
+        .main-card {
+            padding: clamp(2rem, 4vw, 3rem);
+            max-width: 900px;
+            width: 100%;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Banner de bienvenida */
+        .welcome-banner {
+            background: linear-gradient(135deg, #217be2 0%, #8546fa 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            color: white;
+        }
+
+        .banner-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .banner-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .banner-title {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .banner-text {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* Sección de acciones */
+        .actions-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn-home {
+            background: white;
+            border: 2px solid;
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: auto;
+            height: auto;
+            font-weight: 1.5rem;
+        }
+
+        .action-btn-home:hover {
+            transform: translateY(-8px);
+        }
+
+        .action-btn-purple {
+            border-color: #667eea;
+        }
+
+        .action-btn-purple:hover {
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+            background: rgba(102, 126, 234, 0.03);
+        }
+
+        .action-btn-green {
+            border-color: #059669;
+        }
+
+        .action-btn-green:hover {
+            box-shadow: 0 15px 40px rgba(5, 150, 105, 0.25);
+            background: rgba(5, 150, 105, 0.03);
+        }
+
+        .action-btn-red {
+            border-color: #f5576c;
+        }
+
+        .action-btn-red:hover {
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.25);
+            background: rgba(245, 87, 108, 0.03);
+        }
+
+        .action-icon-wrapper {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+        }
+
+        .action-btn-purple .action-icon-wrapper {
+            background: rgba(102, 126, 234, 0.08);
+            color: #667eea;
+        }
+
+        .action-btn-green .action-icon-wrapper {
+            background: rgba(5, 150, 105, 0.08);
+            color: #059669;
+        }
+
+        .action-btn-red .action-icon-wrapper {
+            background: rgba(245, 87, 108, 0.08);
+            color: #f5576c;
+        }
+
+        .action-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .action-label {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        /* Footer de la tarjeta */
+        .card-footer {
+            border-top: 1px solid #E5E7EB;
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tip-text {
+            margin: 0;
+            color: #6B7280;
+            font-size: 0.95rem;
+        }
+
+        .manual-btn {
+            background: transparent;
+            border: none;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .manual-btn:hover {
+            gap: 0.8rem;
+        }
+
+        .arrow-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Footer info */
+        .footer-info {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-wrapper {
+                padding: 2rem 1rem;
+            }
+
+            .card-footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }

@@ -19,8 +19,8 @@
     <div class="top-header">
         <div class="user-info">
             <div>
-                <div class="greeting">Buenas tardes</div>
-                <div class="user-name">Administrador</div>
+                <div class="greeting" id="greeting">Hola</div>
+                <div class="user-name">{{ auth()->user()->nombreUsuario }}</div>
             </div>
             <div class="user-avatar">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -28,23 +28,24 @@
                 </svg>
             </div>
             <div class="dropdown">
-                <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
-
-                </button>
+                <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"></button>
 
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="#">Mi perfil</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">Configuración</a>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#perfil">Mi perfil</button>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li>
-                        <a class="dropdown-item text-danger" href="#">Cerrar sesión</a>
-                    </li>
+
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST">
+                        <li>
+
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
+
+                        </li>
+                    </form>
                 </ul>
             </div>
         </div>
@@ -207,6 +208,7 @@
 
 
     @include('gestionDocumentos')
+    @include('gestionUsuarios')
 
 
 

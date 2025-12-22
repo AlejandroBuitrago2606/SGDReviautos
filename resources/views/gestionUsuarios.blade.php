@@ -20,8 +20,8 @@
 
                 <div class="modal-header border-0 pb-0" style="padding: 24px 24px 0;">
                     <div>
-                        <h1 class="modal-title fs-4 fw-bold mb-1" style="color: #1c1d27ff;" id="perfilLabel">Editar Usuario</h1>
-                        <p class="text-muted small mb-0">Modifique la información del usuario</p>
+                        <h1 class="modal-title fs-4 fw-bold mb-1" style="color: #1c1d27ff;" id="perfilLabel">Editar Perfil</h1>
+                        <p class="text-muted small mb-0">Modifica tu información de usuario</p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

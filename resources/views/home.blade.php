@@ -85,14 +85,14 @@
             <!-- Footer de la tarjeta -->
             <div class="card-footer">
                 <p class="tip-text">
-                    💡 Tip: Usa el menú lateral para navegar entre secciones
+                   <- 💡 Tip: Usa el menú lateral para navegar entre secciones
                 </p>
-                <button class="manual-btn">
+                <!-- <button class="manual-btn">
                     Ver Manuales
                     <svg class="arrow-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
                     </svg>
-                </button>
+                </button> -->
             </div>
         </div>
 

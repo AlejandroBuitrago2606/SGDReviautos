@@ -13,12 +13,11 @@ Route::get('/', [UsuarioController::class, 'viewLoginForm'])->name('login')->mid
 Route::post('/login', [UsuarioController::class, 'login']);
 Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
-
+Route::post('/agregarUsuario', [UsuarioController::class, 'store']);
 
 Route::middleware('auth')->group(function () {
 
     Route::get('/usuarios', [UsuarioController::class, 'index']);
-    Route::post('/agregarUsuario', [UsuarioController::class, 'store']);
     Route::patch('/editarUsuario', [UsuarioController::class, 'update']);
     Route::delete('/eliminarUsuario/{id}', [UsuarioController::class, 'destroy']);
 

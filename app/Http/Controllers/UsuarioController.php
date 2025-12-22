@@ -20,6 +20,10 @@ class UsuarioController extends Controller
         $usuarios = Usuario::all();
         $roles = Rol::all();
 
+        $user = Auth::user();
+        if ($user == null) {
+            return redirect('/');
+        }
         return view('/usuarios', ['usuarios' => $usuarios, 'roles' => $roles]);
     }
 

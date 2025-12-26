@@ -12,6 +12,13 @@
 <!-- Main Content -->
 <div class="main-content" style="margin-left: 1px;">
 
+
+    @php
+
+    $user = auth()->user();
+
+    @endphp
+
     @if (isset($lista_Datos[3]))
     @php
     $idPr = session()->get('idProceso', 0);
@@ -28,6 +35,9 @@
     @endif
 
 
+    @if ( $user->idRol == 4)
+
+
     <a class="btn-add-top" href="{{ url('agregarDocumento') }}" style="text-decoration: none; text-transform: uppercase; font-size: 18px;">
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
             <path fill="#fff" d="M12 2v6a2 2 0 0 0 2 2h6v10a2 2 0 0 1-2 2h-6.81A6.5 6.5 0 0 0 4 11.498V4a2 2 0 0 1 2-2zm1.5.5V8a.5.5 0 0 0 .5.5h5.5zm-1.5 15a5.5 5.5 0 1 0-11 0a5.5 5.5 0 0 0 11 0M7 18l.001 2.503a.5.5 0 1 1-1 0V18H3.496a.5.5 0 0 1 0-1H6v-2.5a.5.5 0 1 1 1 0V17h2.497a.5.5 0 0 1 0 1z" />
@@ -35,6 +45,8 @@
         Agregar Documento
     </a>
 
+
+    @endif
 
 
     <div class="documents-table">
@@ -161,16 +173,24 @@
                 <div class="label">Ver Documento</div>
             </div>
 
+
+
+
+
             <div class="action-buttons">
+                @if ( $user->idRol == 4)
                 <a href="editarDocumento/{{ $doc->id }}" class="action-btn btn-edit" title="Editar">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
                     </svg>
                 </a>
                 <div class="label">Editar</div>
+                @endif
             </div>
 
             <div class="action-buttons">
+
+                @if ( $user->idRol == 4)
                 <a href="javascript:void(0)"
                     class="action-btn btn-acceso"
                     title="Acceso de archivos"
@@ -181,9 +201,11 @@
                     </svg>
                 </a>
                 <div class="label">Acceso al documento</div>
+                @endif
             </div>
 
             <div class="action-buttons">
+                @if ( $user->idRol == 4)
                 <form method="POST" action="{{ url('eliminarDocumento/'.$doc->id) }}">
                     @csrf
                     @method('DELETE')
@@ -207,8 +229,8 @@
 
                 </form>
                 <div class="label">Eliminar</div>
+                @endif
             </div>
-
 
 
 
@@ -317,6 +339,7 @@
         @endforeach
 
 
+        @if ( $user->idRol == 4)
 
 
         <div class="table-header mt-3">
@@ -327,6 +350,8 @@
                 AGREGAR CATEGORIA
             </button>
         </div>
+
+        @endif
 
 
 

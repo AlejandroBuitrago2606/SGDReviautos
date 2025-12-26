@@ -13,6 +13,11 @@
 
 <body>
 
+    @php
+
+    $usuario = auth()->user();
+
+    @endphp
 
 
 
@@ -20,7 +25,7 @@
         <div class="user-info">
             <div>
                 <div class="greeting" id="greeting">Hola</div>
-                <div class="user-name">{{ auth()->user()->nombreUsuario }}</div>
+                <div class="user-name">{{ $usuario->nombreUsuario }}</div>
             </div>
             <div class="user-avatar">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -96,6 +101,7 @@
 
                 @endforeach
 
+                @if ( $usuario->idRol == 4)
 
 
                 <a class="submenu-item-add sin-subrayado" data-bs-toggle="modal" data-bs-target="#agregarProceso">
@@ -104,8 +110,14 @@
                     </svg>
                     <span>Agregar Proceso</span>
                 </a>
+
+                @endif
             </div>
         </div>
+
+
+
+        @if ( $usuario->idRol == 4)
 
 
         <div class="menu-item">
@@ -142,7 +154,7 @@
             </a>
         </div>
 
-
+        @endif
 
 
 

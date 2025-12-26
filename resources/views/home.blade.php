@@ -4,6 +4,14 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/home.css') }}">
 
 <div class="dashboard-container">
+
+
+    @php
+
+    $user = auth()->user();
+
+    @endphp
+
     <!-- Elementos decorativos -->
     <div class="bg-decoration-1"></div>
     <div class="bg-decoration-2"></div>
@@ -33,19 +41,35 @@
                         <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                     </svg>
                     <h2 class="banner-title">
-                        ¡Bienvenido de vuelta!
+                        ¡Bienvenido 👋!
                     </h2>
                 </div>
+
+                @if ( $user->idRol == 4)
+
                 <p class="banner-text">
                     Gestiona tus documentos de forma simple y eficiente.<br />
                     Selecciona una acción rápida para comenzar.
                 </p>
+
+                @else
+                <p class="banner-text">
+                    Consulta los manuales e instructivos disponibles para obtener orientación sobre el manejo de procesos, equipos y actividades empresariales.
+                </p>
+                @endif
             </div>
+
+
+            @if ( $user->idRol == 4)
+
 
             <!-- Acciones Rápidas -->
             <h3 class="actions-title">
                 Acciones Rápidas
             </h3>
+
+
+
 
             <div class="quick-actions">
                 <!-- Agregar Documento -->
@@ -82,12 +106,17 @@
                 </a>
             </div>
 
+
+
+            @endif
+
+
             <!-- Footer de la tarjeta -->
             <div class="card-footer">
                 <p class="tip-text">
-                   <- 💡 Tip: Usa el menú lateral para navegar entre secciones
-                </p>
-                <!-- <button class="manual-btn">
+                    <- 💡 Tip: Usa el menú lateral para navegar entre secciones
+                        </p>
+                        <!-- <button class="manual-btn">
                     Ver Manuales
                     <svg class="arrow-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />

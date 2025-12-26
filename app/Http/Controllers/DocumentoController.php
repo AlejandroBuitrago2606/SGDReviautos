@@ -6,6 +6,7 @@ use App\Models\Documento;
 use App\Models\Proceso;
 use App\Models\TipoDocumento;
 use App\Models\Rol;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreDocumentoRequest;
@@ -25,11 +26,27 @@ class DocumentoController extends Controller
     public function index()
     {
         $idProceso = session()->get('idProceso', 0);
+        $user = Auth::user();
+
 
         if ($idProceso > 0) {
-            $lista_documentos = Documento::with('tipoDocumento')
-                                         ->where('idProceso', $idProceso)
-                                         ->get();
+
+            if ($user->idRol != 4) {
+
+                $accesosQuery = RolDocumento::where('idRol', $user->idRol)->where('acceso', 1)
+                    ->pluck('idDocumento'); // ids de documentos permitidos
+
+                $lista_documentos = Documento::with('tipoDocumento')
+                    ->where('idProceso', $idProceso)
+                    ->whereIn('id', $accesosQuery) // solo los permitidos por el rol
+                    ->get();
+
+            } else {
+                $lista_documentos = Documento::with('tipoDocumento')
+                    ->where('idProceso', $idProceso)
+                    ->get();
+            }
+
 
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
@@ -44,6 +61,7 @@ class DocumentoController extends Controller
             $procesos = Proceso::all();
             $roles = Rol::all();
             $accesos = RolDocumento::all();
+
             $lista_Datos = [$documentosAgrupados, $roles, $accesos, $procesos, $TiposDoc];
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
         } else {

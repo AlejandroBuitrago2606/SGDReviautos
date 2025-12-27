@@ -6,6 +6,7 @@ use App\Models\RolDocumento;
 use App\Models\Rol;
 use App\Models\Proceso;
 use App\Models\Documento;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRolDocumentoRequest;
 use App\Http\Requests\UpdateRolDocumentoRequest;
 use Dotenv\Exception\ValidationException;
@@ -20,12 +21,27 @@ class RolDocumentoController extends Controller
     public function index()
     {
         $idProceso = session()->get('idProceso', 0);
+        $user = Auth::user();
+
 
         if ($idProceso > 0) {
-            $lista_documentos = Documento::with('tipoDocumento')
-                ->where('idProceso', $idProceso)
-                ->get();
-                
+
+            if ($user->idRol != 4) {
+
+                $accesosQuery = RolDocumento::where('idRol', $user->idRol)->where('acceso', 1)
+                    ->pluck('idDocumento'); // ids de documentos permitidos
+
+                $lista_documentos = Documento::with('tipoDocumento')
+                    ->where('idProceso', $idProceso)
+                    ->whereIn('id', $accesosQuery) // solo los permitidos por el rol
+                    ->get();
+            } else {
+                $lista_documentos = Documento::with('tipoDocumento')
+                    ->where('idProceso', $idProceso)
+                    ->get();
+            }
+
+
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
 
@@ -39,6 +55,7 @@ class RolDocumentoController extends Controller
             $procesos = Proceso::all();
             $roles = Rol::all();
             $accesos = RolDocumento::all();
+
             $lista_Datos = [$documentosAgrupados, $roles, $accesos, $procesos, $TiposDoc];
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
         } else {
@@ -113,7 +130,6 @@ class RolDocumentoController extends Controller
             }
 
             return $this->index()->with('acceso', 'Cambios guardados correctamente');
-            
         } catch (ValidationException $e) {
             return $this->index()->with('acceso', 'Ocurrió un error al guardar los cambios: ' . $e->getMessage());
         }

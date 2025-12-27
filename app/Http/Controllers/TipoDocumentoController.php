@@ -6,6 +6,7 @@ use App\Models\TipoDocumento;
 use App\Models\Documento;
 use App\Models\RolDocumento;
 use App\Models\Rol;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Proceso;
 use App\Http\Requests\StoreTipoDocumentoRequest;
 use App\Http\Requests\UpdateTipoDocumentoRequest;
@@ -20,11 +21,26 @@ class TipoDocumentoController extends Controller
     public function index()
     {
         $idProceso = session()->get('idProceso', 0);
+        $user = Auth::user();
+
 
         if ($idProceso > 0) {
-            $lista_documentos = Documento::with('tipoDocumento')
-                ->where('idProceso', $idProceso)
-                ->get();
+
+            if ($user->idRol != 4) {
+
+                $accesosQuery = RolDocumento::where('idRol', $user->idRol)->where('acceso', 1)
+                    ->pluck('idDocumento'); // ids de documentos permitidos
+
+                $lista_documentos = Documento::with('tipoDocumento')
+                    ->where('idProceso', $idProceso)
+                    ->whereIn('id', $accesosQuery) // solo los permitidos por el rol
+                    ->get();
+            } else {
+                $lista_documentos = Documento::with('tipoDocumento')
+                    ->where('idProceso', $idProceso)
+                    ->get();
+            }
+
 
             $documentosAgrupados = $lista_documentos->groupBy('idTipoDocumento');
 
@@ -39,10 +55,10 @@ class TipoDocumentoController extends Controller
             $procesos = Proceso::all();
             $roles = Rol::all();
             $accesos = RolDocumento::all();
+
             $lista_Datos = [$documentosAgrupados, $roles, $accesos, $procesos, $TiposDoc];
             return view('/indexDocumentos', ['lista_Datos' => $lista_Datos]);
         } else {
-
             return view('home');
         }
     }
@@ -131,9 +147,9 @@ class TipoDocumentoController extends Controller
         } catch (QueryException $e) {
 
             if ($e->getCode() === '23000') {
-                 return view('masterpages.dashboard')->with('categoriaEliminada', 'Ocurrió un error al eliminar la categoria: ' . 'Existen documentos asociados a esta.');
+                return view('masterpages.dashboard')->with('categoriaEliminada', 'Ocurrió un error al eliminar la categoria: ' . 'Existen documentos asociados a esta.');
             }
-             return view('masterpages.dashboard')->with('categoriaEliminada', 'Ocurrió un error al eliminar la categoria: ' . $e->getMessage());
+            return view('masterpages.dashboard')->with('categoriaEliminada', 'Ocurrió un error al eliminar la categoria: ' . $e->getMessage());
         }
     }
 }

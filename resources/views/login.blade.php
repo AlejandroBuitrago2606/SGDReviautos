@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Reviautos</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/login.css') }}">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -50,8 +50,8 @@
                 <!-- Botón de Login -->
                 <button type="submit">Iniciar Sesión</button>
 
-                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-                <a href="#"  data-bs-toggle="modal" data-bs-target="#staticBackdropAddUser" class="create-account">Registrate</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdropAddUser" class="create-account">Registrate</a>
 
                 <!-- Mensaje de Error -->
                 @if (session('error'))
@@ -65,6 +65,38 @@
             <div class="form-footer">
                 <p>CDA REVIAUTOS S.A. © 2025</p>
             </div>
+
+
+
+            <!-- @if(isset($correoExiste)) -->
+
+            <div id="mensaje-restablecimiento" class="mensaje-restablecimiento">
+                @switch($correoExiste)
+                @case("success")
+                ✔️ Se ha enviado un enlace de restablecimiento de contraseña a tu correo electrónico.
+                @break
+
+                @case("error")
+                ❌ Error al restablecer la contraseña. Por favor, intenta nuevamente.
+                @break
+
+                @case("null")
+                ❌ El correo electrónico no está registrado en el sistema.
+                @break
+
+                @case("claveActualizada")
+                ✔️ Tu contraseña ha sido actualizada exitosamente.
+                @default
+                <!-- No hacer nada -->
+                @endswitch
+            </div>
+
+            <script>
+
+            </script>
+<!-- 
+            @endif -->
+
         </div>
     </div>
 
@@ -142,8 +174,7 @@
                                 class="form-control"
                                 name="clave"
                                 id="clave"
-                                style="border-radius: 8px; border: 1px solid #dee2e6; padding: 12px 14px;"
-                                />
+                                style="border-radius: 8px; border: 1px solid #dee2e6; padding: 12px 14px;" />
                         </div>
 
                         <div class="mb-3">
@@ -158,7 +189,7 @@
                                 id="rol"
                                 style="border-radius: 8px; border: 1px solid #dee2e6; padding: 12px 14px;"
                                 required>
-                                <option value="6" selected>Indefinido</option>                            
+                                <option value="6" selected>Indefinido</option>
                             </select>
                         </div>
 
@@ -195,7 +226,10 @@
     </div>
 
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    @include('auth.forgotPassword')
+
+     <script src="{{ asset('js/login.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

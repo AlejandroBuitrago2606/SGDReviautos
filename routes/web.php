@@ -8,6 +8,23 @@ use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RolDocumentoController;
 use App\Http\Controllers\TipoDocumentoController;
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])
+    ->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showForm'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
+    ->name('password.update');
+
+
+
+
+
 
 Route::get('/', [UsuarioController::class, 'viewLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [UsuarioController::class, 'login']);

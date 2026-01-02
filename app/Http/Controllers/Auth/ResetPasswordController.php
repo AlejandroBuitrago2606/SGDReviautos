@@ -34,7 +34,7 @@ class ResetPasswordController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('correoExiste', 'claveActualizada')
-            : redirect()->route('login')->with('correoExiste', 'error');
+            ? view('auth.resetPassword', ['resetPassword' => true])
+            : view('auth.resetPassword', ['resetPassword' => false]);
     }
 }

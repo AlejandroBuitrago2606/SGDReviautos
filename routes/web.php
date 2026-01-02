@@ -7,9 +7,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProcesoController;
 use App\Http\Controllers\RolDocumentoController;
 use App\Http\Controllers\TipoDocumentoController;
-
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\FileController;
 
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])
@@ -20,6 +20,13 @@ Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showForm
 
 Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
     ->name('password.update');
+
+
+
+
+Route::get('/preview/{filename}', [FileController::class, 'preview'])
+    ->where('filename', '.*');
+
 
 
 
@@ -38,7 +45,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/agregarDocumento', [DocumentoController::class, 'create']); /**/
     Route::get('/editarDocumento/{id}', [DocumentoController::class, 'edit']);  /**/
     Route::get('/acceso/{id}', [RolDocumentoController::class, 'acceso']);  /**/
-
 });
 
 

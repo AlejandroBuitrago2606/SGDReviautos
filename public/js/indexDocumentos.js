@@ -1,13 +1,4 @@
 
-document.querySelectorAll('.btn-view').forEach(btn => {
-    btn.addEventListener('click', function () {
-        alert('Visualizando documento...');
-    });
-});
-
-
-
-
 
 
 

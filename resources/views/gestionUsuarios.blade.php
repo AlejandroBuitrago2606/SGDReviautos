@@ -88,6 +88,7 @@
                         <input type="password"
                             class="form-control"
                             name="claveEdit"
+                            minlength="8"
                             id="claveEdit"
                             style="border-radius: 8px; border: 1px solid #dee2e6; padding: 12px 14px;"
                             placeholder="Ingrese nueva contraseña"

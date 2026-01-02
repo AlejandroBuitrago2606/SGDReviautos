@@ -96,6 +96,7 @@ class UsuarioController extends Controller
             $usuario->save();
 
             return $this->index()->with('usuarioEditado', 'Usuario editado exitosamente');
+            
         } catch (ValidationException $e) {
 
             return $this->index()->with('usuarioEditado', 'Error al editar el usuario: ' . $e->getMessage());

@@ -164,6 +164,7 @@
                                                         id="claveEdit"
                                                         name="claveEdit"
                                                         class="form-control"
+                                                        minlength="8"
                                                         style="border-radius: 8px; border: 1px solid #dee2e6; padding: 10px 14px;"
                                                         placeholder="Ingrese nueva contraseña"
                                                         required />
@@ -303,7 +304,7 @@
                             Contraseña
                         </label>
                         <input type="text"
-                            value="1234"
+                            value="12345678"
                             class="form-control"
                             name="clave"
                             id="clave"

@@ -90,10 +90,6 @@
                 <!-- No hacer nada -->
                 @endswitch
             </div>
-
-            <script>
-
-            </script>
 <!-- 
             @endif -->
 
@@ -173,8 +169,9 @@
                             <input type="password"
                                 class="form-control"
                                 name="clave"
+                                minlength="8"
                                 id="clave"
-                                style="border-radius: 8px; border: 1px solid #dee2e6; padding: 12px 14px;" />
+                                style="border-radius: 8px; border: 1px solid #dee2e6; padding: 12px 14px;" required />
                         </div>
 
                         <div class="mb-3">

@@ -23,21 +23,19 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
 
 
 
-
-Route::get('/preview/{filename}', [FileController::class, 'preview'])
-    ->where('filename', '.*');
-
-
-
-
-
-
-
 Route::get('/', [UsuarioController::class, 'viewLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [UsuarioController::class, 'login']);
 Route::post('/logout', [UsuarioController::class, 'logout'])->name('logout');
 
+
+
+
+
 Route::post('/agregarUsuario', [UsuarioController::class, 'store']);
+
+
+
+
 
 Route::middleware(['auth', 'admin'])->group(function () {
 
@@ -50,12 +48,22 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware('auth')->group(function () {
 
+
+    Route::get('/preview/{filename}', [FileController::class, 'preview'])
+        ->where('filename', '.*')->name('preview.doc');
+
+    Route::get('/preview-file/{filename}', [FileController::class, 'servePreview'])
+        ->where('filename', '.*')
+        ->name('preview.file');
+
+
+
     Route::patch('/editarUsuario', [UsuarioController::class, 'update']);
     Route::delete('/eliminarUsuario/{id}', [UsuarioController::class, 'destroy']);
 
 
-    Route::get('/indexDocumentos', [DocumentoController::class, 'index']);
 
+    Route::get('/indexDocumentos', [DocumentoController::class, 'index']);
     Route::post('/agregarDocumento', [DocumentoController::class, 'store']);
     Route::patch('/editarDocumento/{id}/edit', [DocumentoController::class, 'update']);
     Route::delete('/eliminarDocumento/{id}', [DocumentoController::class, 'destroy']);

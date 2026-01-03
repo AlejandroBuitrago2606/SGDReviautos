@@ -40,7 +40,6 @@ class DocumentoController extends Controller
                     ->where('idProceso', $idProceso)
                     ->whereIn('id', $accesosQuery) // solo los permitidos por el rol
                     ->get();
-
             } else {
                 $lista_documentos = Documento::with('tipoDocumento')
                     ->where('idProceso', $idProceso)
@@ -157,6 +156,8 @@ class DocumentoController extends Controller
             $ruta_de_archivo = $datos["rutaArchivo"];
             $rutaArchivo = null;
 
+            $documento = Documento::where('id', $idDocumento)->first();
+
 
             if (!isset($ruta_de_archivo)) {
 
@@ -172,13 +173,15 @@ class DocumentoController extends Controller
                 if (!isset($rutaArchivo)) {
                     throw new Exception("Error al guardar el archivo", 500);
                 }
+
+                // eliminar el archivo anterior
+                if (Storage::disk('private')->exists($documento->rutaArchivo)) {
+                    Storage::disk('private')->delete($documento->rutaArchivo);
+                }
+
             } else {
                 $rutaArchivo = $ruta_de_archivo;
             }
-
-
-
-            $documento = Documento::where('id', $idDocumento)->first();
 
             $documento->consecutivo = $datos["consecutivo"];
             $documento->nombre = $datos["nombreDocumento"];
@@ -218,8 +221,8 @@ class DocumentoController extends Controller
             $this->eliminarAccesos($idDocumento);
 
             //eliminamos primero el archivo fisico
-            if (Storage::disk('public')->exists($documento->rutaArchivo)) {
-                Storage::disk('public')->delete($documento->rutaArchivo);
+            if (Storage::disk('private')->exists($documento->rutaArchivo)) {
+                Storage::disk('private')->delete($documento->rutaArchivo);
             }
             $documento->delete();
 
@@ -248,8 +251,8 @@ class DocumentoController extends Controller
         $rutaArchivo = null;
         try {
 
-            if (! Storage::disk('public')->exists($folder)) {
-                Storage::disk('public')->makeDirectory($folder);
+            if (! Storage::disk('private')->exists($folder)) {
+                Storage::disk('private')->makeDirectory($folder);
             }
 
 
@@ -261,7 +264,7 @@ class DocumentoController extends Controller
             $filename = $timestamp . '_' . $slugName . '.' . $extension;
 
 
-            $rutaArchivo = $file->storeAs($folder, $filename, 'public');
+            $rutaArchivo = $file->storeAs($folder, $filename, 'private');
         } catch (Exception $e) {
 
             throw new Exception('Error al guardar el archivo: ' . $e->getMessage());
@@ -282,11 +285,9 @@ class DocumentoController extends Controller
     {
         $ruta = $request->input('rutaArchivo', '');
 
-        // Verificar si el archivo existe y descargarlo
-
         try {
-            if (Storage::disk('public')->exists($ruta)) {
-                $fullPath = Storage::disk('public')->path($ruta);
+            if (Storage::disk('private')->exists($ruta)) {
+                $fullPath = Storage::disk('private')->path($ruta);
                 return response()->download($fullPath);
             } else {
                 return $this->index()->with('errorDescarga', 'El archivo no existe.');

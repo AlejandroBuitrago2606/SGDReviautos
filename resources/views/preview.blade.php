@@ -24,15 +24,15 @@
     @endphp
 
     @if(in_array($ext, ['jpg','jpeg','png']))
-    <img src="{{ $url }}" class="viewer">
+    <img src="{{ route('preview.file', ['filename' => $filename]) }}" class="viewer">
 
     @elseif($ext == 'pdf')
-    <iframe src="{{ $url }}" width="100" height="100%" class="viewer"></iframe>
+    <iframe src="{{ route('preview.file', ['filename' => $filename]) }}" width="100" height="100%" class="viewer"></iframe>
 
     @elseif(in_array($ext, ['doc','docx','xls','xlsx']))
     {{-- Usamos Office Viewer de Microsoft para leer Word/Excel --}}
        <iframe
-        src="https://view.officeapps.live.com/op/embed.aspx?src={{ urlencode($url) }}"
+        src="https://view.officeapps.live.com/op/embed.aspx?src={{ urlencode(route('preview.file', ['filename' => $filename])) }}"
         class="viewer">
     </iframe>
 

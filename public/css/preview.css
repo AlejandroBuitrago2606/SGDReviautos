@@ -1,0 +1,260 @@
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+       body {
+           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+           background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+           min-height: 100vh;
+           display: flex;
+           flex-direction: column;
+       }
+
+       /* Header mejorado */
+       .header {
+           background: white;
+           padding: 20px 32px;
+           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+           border-bottom: 1px solid #e9ecef;
+       }
+
+       .header-content {
+           max-width: 1400px;
+           margin: 0 auto;
+           display: flex;
+           align-items: center;
+           justify-content: space-between;
+       }
+
+       .file-info {
+           display: flex;
+           align-items: center;
+           gap: 16px;
+       }
+
+       .file-icon {
+           width: 48px;
+           height: 48px;
+           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+           border-radius: 12px;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           color: white;
+           font-weight: 600;
+           font-size: 18px;
+       }
+
+       .file-details h1 {
+           font-size: 18px;
+           font-weight: 600;
+           color: #1c1d27ff;
+           margin-bottom: 4px;
+           word-break: break-word;
+       }
+
+       .file-meta {
+           font-size: 13px;
+           color: #6c757d;
+       }
+
+       .file-type-badge {
+           display: inline-block;
+           padding: 4px 10px;
+           background-color: #e3f2fd;
+           color: #1976d2;
+           border-radius: 6px;
+           font-size: 12px;
+           font-weight: 600;
+           text-transform: uppercase;
+           margin-left: 8px;
+       }
+
+       .header-actions {
+           display: flex;
+           gap: 12px;
+       }
+
+       .btn {
+           padding: 10px 20px;
+           border: none;
+           border-radius: 8px;
+           font-weight: 600;
+           font-size: 14px;
+           cursor: pointer;
+           display: flex;
+           align-items: center;
+           gap: 8px;
+           transition: all 0.2s ease;
+           text-decoration: none;
+       }
+
+       .btn-primary {
+           background-color: #1c1d27ff;
+           color: white;
+       }
+
+       .btn-primary:hover {
+           background-color: #2d2e3a;
+           transform: translateY(-1px);
+           box-shadow: 0 4px 12px rgba(28, 29, 39, 0.3);
+       }
+
+       .btn-secondary {
+           background-color: #f8f9fa;
+           color: #495057;
+           border: 1px solid #dee2e6;
+       }
+
+       .btn-secondary:hover {
+           background-color: #e9ecef;
+       }
+
+       /* Contenedor del visor */
+       .viewer-container {
+           flex: 1;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           padding: 24px;
+           max-width: 1400px;
+           margin: 0 auto;
+           width: 100%;
+       }
+
+       .viewer-wrapper {
+           background: white;
+           border-radius: 16px;
+           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+           overflow: hidden;
+           width: 100%;
+           height: calc(100vh - 140px);
+           display: flex;
+           flex-direction: column;
+       }
+
+       .viewer {
+           width: 100%;
+           height: 100%;
+           border: none;
+           display: block;
+       }
+
+       .viewer-img {
+           width: 100%;
+           height: 100%;
+           object-fit: contain;
+           background: #f8f9fa;
+       }
+
+       /* Mensaje de error mejorado */
+       .error-container {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: center;
+           padding: 48px;
+           text-align: center;
+       }
+
+       .error-icon {
+           width: 80px;
+           height: 80px;
+           background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+           border-radius: 50%;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           margin-bottom: 24px;
+       }
+
+       .error-message h2 {
+           color: #1c1d27ff;
+           font-size: 20px;
+           font-weight: 600;
+           margin-bottom: 8px;
+       }
+
+       .error-message p {
+           color: #6c757d;
+           font-size: 14px;
+           max-width: 400px;
+           line-height: 1.6;
+       }
+
+       /* Loading animation */
+       .loading-overlay {
+           position: absolute;
+           top: 0;
+           left: 0;
+           right: 0;
+           bottom: 0;
+           background: white;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: center;
+           z-index: 1000;
+       }
+
+       .spinner {
+           width: 50px;
+           height: 50px;
+           border: 4px solid #f3f4f6;
+           border-top: 4px solid #667eea;
+           border-radius: 50%;
+           animation: spin 1s linear infinite;
+       }
+
+       @keyframes spin {
+           0% {
+               transform: rotate(0deg);
+           }
+
+           100% {
+               transform: rotate(360deg);
+           }
+       }
+
+       .loading-text {
+           margin-top: 16px;
+           color: #6c757d;
+           font-size: 14px;
+       }
+
+       /* Responsive */
+       @media (max-width: 768px) {
+           .header {
+               padding: 16px;
+           }
+
+           .header-content {
+               flex-direction: column;
+               gap: 16px;
+               align-items: flex-start;
+           }
+
+           .file-info {
+               width: 100%;
+           }
+
+           .header-actions {
+               width: 100%;
+               flex-direction: column;
+           }
+
+           .btn {
+               width: 100%;
+               justify-content: center;
+           }
+
+           .viewer-container {
+               padding: 16px;
+           }
+
+           .viewer-wrapper {
+               height: calc(100vh - 200px);
+           }
+       }

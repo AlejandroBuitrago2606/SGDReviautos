@@ -43,6 +43,18 @@ class UsuarioController extends Controller
         try {
 
             $datos = $request->validated();
+            $user = Auth::user();
+
+            $email = Usuario::where('email', $datos['correo'])->first();
+            if ($email != null) {
+
+
+                if ($user == null) {
+                    return view('login', ['usuarioCreado' => 'Este correo ya está en uso']);
+                }
+                return $this->index()->with('usuarioCreado', 'Este correo ya está en uso');
+            }
+
             $datos['clave'] = password_hash($datos['clave'], PASSWORD_DEFAULT);
 
             Usuario::create([
@@ -53,7 +65,12 @@ class UsuarioController extends Controller
                 'idRol' => $datos['idRol']
             ]);
 
+
+            if ($user == null) {
+                return view('login', ['usuarioCreado' => 'Te registraste exitosamente, por favor inicia sesión']);
+            }
             return $this->index()->with('usuarioCreado', 'Usuario creado exitosamente');
+
         } catch (ValidationException $e) {
             return $this->index()->with('usuarioCreado', 'Error al crear el usuario: ' . $e->getMessage());
         }
@@ -85,6 +102,14 @@ class UsuarioController extends Controller
             //code...
 
             $datos = $request->validated();
+
+            $correo = Usuario::where('email', $datos['correoEdit'])
+                ->where('id', '!=', $datos['idUsuarioEdit'])
+                ->first();
+            if ($correo != null) {
+                return $this->index()->with('usuarioEditado', 'Este correo ya está en uso');
+            }
+
             $idUsuario = $datos['idUsuarioEdit'];
 
             $usuario = Usuario::where('id', $idUsuario)->first();
@@ -96,7 +121,6 @@ class UsuarioController extends Controller
             $usuario->save();
 
             return $this->index()->with('usuarioEditado', 'Usuario editado exitosamente');
-            
         } catch (ValidationException $e) {
 
             return $this->index()->with('usuarioEditado', 'Error al editar el usuario: ' . $e->getMessage());

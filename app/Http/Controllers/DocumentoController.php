@@ -178,7 +178,6 @@ class DocumentoController extends Controller
                 if (Storage::disk('private')->exists($documento->rutaArchivo)) {
                     Storage::disk('private')->delete($documento->rutaArchivo);
                 }
-
             } else {
                 $rutaArchivo = $ruta_de_archivo;
             }
